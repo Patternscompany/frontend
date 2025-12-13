@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - TGSDC 2025</title>
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-btn {
+            background-color: #0a6ebd;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background-color: #085a9c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <h3 class="text-center mb-4">Admin Login</h3>
+        <div id="errorMsg" class="alert alert-danger d-none"></div>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" id="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary login-btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:5000/api/login";
+
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMsg = document.getElementById("errorMsg");
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    localStorage.setItem("admin_logged_in", "true");
+                    window.location.href = "admin-dashboard.html";
+                } else {
+                    errorMsg.textContent = data.error;
+                    errorMsg.classList.remove("d-none");
+                }
+            } catch (err) {
+                console.error(err);
+                errorMsg.textContent = "Error: " + err.message;
+                errorMsg.classList.remove("d-none");
+            }
+        });
+    </script>
+</body>
+
+</html>

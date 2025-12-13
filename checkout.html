@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telangana State Dental Conference - Checkout</title>
+
+    <!--=====FAB ICON=======-->
+    <link rel="shortcut icon" href="assets/img/logoo.jpg" />
+
+    <!--===== CSS LINK =======-->
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/aos.css" />
+    <link rel="stylesheet" href="assets/css/vendor/fontawesome.css" />
+    <link rel="stylesheet" href="assets/css/vendor/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/css/vendor/mobile.css" />
+    <link rel="stylesheet" href="assets/css/vendor/owlcarousel.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/sidebar.css" />
+    <link rel="stylesheet" href="assets/css/vendor/slick-slider.css" />
+    <link rel="stylesheet" href="assets/css/vendor/nice-select.css" />
+    <link rel="stylesheet" href="assets/css/vendor/odometer.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!--=====  JS SCRIPT LINK =======-->
+    <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+    <style>
+        .checkout-section {
+            padding-top: 150px;
+            padding-bottom: 100px;
+        }
+
+        .checkout-card {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            background: #fff;
+        }
+
+        .amount-display {
+            font-size: 2.5rem;
+            color: #0a6ebd;
+            font-weight: bold;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* LOADER STYLES */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0a6ebd;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="homepage4-body">
+
+    <!-- LOADER HTML -->
+    <div id="paymentLoader" class="loader-overlay">
+        <div class="spinner"></div>
+        <div class="loader-text">Processing Payment...</div>
+        <p class="text-muted mt-2">Please do not close this window</p>
+    </div>
+
+    <!--=====HEADER START=======-->
+    <header>
+        <div class="header-area homepage4 header header-sticky d-none d-lg-block" id="header">
+            <div class="container-fluid p-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="header-elements">
+                            <div class="site-logo">
+                                <a href="index.html"><img src="assets/img/trant-logo.png" alt="" /></a>
+                            </div>
+                            <div class="main-menu">
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="about.html">About Event</a></li>
+                                    <li><a href="register.html">Register</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--=====HEADER END =======-->
+
+    <div class="container checkout-section">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="checkout-card">
+                    <h2 class="text-center mb-4">Registration Checkout</h2>
+
+                    <div class="text-center mb-5">
+                        <p class="mb-2">Total Amount to Pay</p>
+                        <div class="amount-display">₹ <span id="displayAmount">0</span></div>
+                    </div>
+
+                    <div class="checkout-details mb-4">
+                        <div class="detail-row">
+                            <span class="detail-label">Registration ID</span>
+                            <span class="detail-value" id="dispRegId">...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Name</span>
+                            <span class="detail-value" id="dispName">...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Category</span>
+                            <span class="detail-value" id="dispCategory">...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Email</span>
+                            <span class="detail-value" id="dispEmail">...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Mobile</span>
+                            <span class="detail-value" id="dispMobile">...</span>
+                        </div>
+                    </div>
+
+                    <button id="payNowBtn" class="btn btn-primary w-100 btn-lg">Pay Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===== FOOTER AREA STARTS =======-->
+    <div class="footer4-sertion-area">
+        <div class="container">
+            <div class="row">
+
+                <!-- Logo & Description -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-logo-area">
+                        <img src="assets/img/trant-logo.png" alt="" />
+                        <div class="space16"></div>
+                        <p>
+                            The 10ᵗʰ Telangana State Dental Conference brings together dental professionals,
+                            clinicians, students, and experts to share knowledge, advancements, and innovations
+                            in modern dentistry.
+                        </p>
+                        <div class="space24"></div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <div class="link-content">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="about.html">About Conference</a></li>
+                            <li><a href="#">Speakers</a></li>
+                            <li><a href="#">Scientific Program</a></li>
+                            <li><a href="#">Gallery</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="cancelation-and-refund.html">Refund Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="link-content2">
+                        <h3>Contact Us</h3>
+                        <ul>
+                            <li>
+                                <a href="tel:+919876543210">
+                                    <img src="assets/img/icons/phn1.svg" alt="" />+91 98765 43210
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Footer Gallery -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-social-box">
+                        <h3>Conference Highlights</h3>
+                        <!-- Using minimal footer content for brevity -->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="space60"></div>
+
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright">
+                        <p>&copy; Copyright 2025 - TGSDC.
+                            All Rights Reserved | Hosted by IDA Cyberabad Branch</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--===== FOOTER AREA ENDS =======-->
+
+    <!--===== JS SCRIPT LINK =======-->
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script>
+        // CONFIGURATION - CHANGE THIS FOR LIVE DEPLOYMENT
+        // const API_BASE_URL = "https://your-live-backend.com"; 
+        const API_BASE_URL = "http://localhost:5000";
+
+        // CHECKOUT LOGIC
+        let regData = null;
+
+        window.onload = function () {
+            const storedData = localStorage.getItem("reg_payload");
+            if (!storedData) {
+                alert("No registration data found. Redirecting to registration page.");
+                window.location.href = "register.html";
+                return;
+            }
+
+            regData = JSON.parse(storedData);
+
+            // Populate UI
+            document.getElementById("displayAmount").innerText = regData.amount;
+            document.getElementById("dispRegId").innerText = regData.reg_id;
+            document.getElementById("dispName").innerText = regData.name;
+            document.getElementById("dispCategory").innerText = regData.reg_type;
+            document.getElementById("dispEmail").innerText = regData.email;
+            document.getElementById("dispMobile").innerText = regData.mobile;
+        };
+
+        document.getElementById("payNowBtn").onclick = async function () {
+            if (!regData) return;
+
+            try {
+                console.log("Initiating payment with API:", API_BASE_URL);
+
+                // 1️⃣ GET RAZORPAY KEY
+                let keyRes = await fetch(`${API_BASE_URL}/api/get-razorpay-key`);
+                if (!keyRes.ok) throw new Error(`Failed to fetch key: ${keyRes.status} ${keyRes.statusText}`);
+
+                let keyJson = await keyRes.json();
+                const RAZORPAY_KEY = keyJson.key;
+
+                // 2️⃣ CREATE ORDER
+                let orderRes = await fetch(`${API_BASE_URL}/api/create-order`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        amount: regData.amount,
+                        reg_id: regData.reg_id
+                    })
+                });
+
+                if (!orderRes.ok) throw new Error(`Order API failed: ${orderRes.status} ${orderRes.statusText}`);
+
+                let orderJson = await orderRes.json();
+                if (!orderJson.success) throw new Error(orderJson.error || "Order creation failed!");
+
+                const order = orderJson.order;
+
+                // 3️⃣ OPEN RAZORPAY
+                var options = {
+                    key: RAZORPAY_KEY,
+                    amount: order.amount,
+                    currency: "INR",
+                    name: "Telangana State Dental Conference",
+                    description: "Registration ID: " + regData.reg_id,
+                    order_id: order.id,
+
+                    handler: async function (response) {
+                        // SHOW LOADER IMMEDIATELY
+                        document.getElementById("paymentLoader").style.display = "flex";
+
+                        try {
+                            // 4️⃣ VERIFY PAYMENT
+                            console.log("Verifying payment...");
+                            let verifyRes = await fetch(`${API_BASE_URL}/api/verify-payment`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    reg_id: regData.reg_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id
+                                })
+                            });
+
+                            if (!verifyRes.ok) {
+                                throw new Error(`Verify failed: ${verifyRes.status} ${verifyRes.statusText}`);
+                            }
+
+                            let verifyJson = await verifyRes.json();
+                            if (verifyJson.success) {
+                                localStorage.removeItem("reg_payload"); // Clean up
+                                window.location.href = "success.html";
+                            } else {
+                                throw new Error(verifyJson.error || "Verification success=false");
+                            }
+                        } catch (verifyErr) {
+                            document.getElementById("paymentLoader").style.display = "none";
+                            console.error("Verification Error:", verifyErr);
+                            // Only show alert if it's not a successful redirect (which shouldn't happen here anyway)
+                            alert("Payment verification failed. Please contact support. Error: " + verifyErr.message);
+                        }
+                    },
+
+                    prefill: {
+                        name: regData.name,
+                        email: regData.email,
+                        contact: regData.mobile
+                    },
+                    theme: { color: "#0a6ebd" },
+                    modal: {
+                        ondismiss: function () {
+                            console.log('Checkout form closed');
+                        }
+                    }
+                };
+
+                var rzp = new Razorpay(options);
+                rzp.on('payment.failed', function (response) {
+                    console.error("Razorpay Payment Failed:", response.error);
+                    alert("Payment Failed: " + response.error.description);
+                });
+                rzp.open();
+
+            } catch (err) {
+                console.error("Process Error:", err);
+                alert("Error: " + err.message);
+            }
+        };
+    </script>
+</body>
+
+</html>
