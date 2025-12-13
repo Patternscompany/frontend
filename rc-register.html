@@ -243,19 +243,18 @@
                                 <div class="d-flex flex-column gap-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="regType" id="rt1"
-                                            value="RC MEMBER(DELEGATE WITH BANQUET)" data-amount="3500">
-                                        <label class="form-check-label fw-bold" for="rt1">RC MEMBER (DELEGATE WITH
-                                            BANQUET)</label>
+                                            value="RC MEMBER" data-amount="3500">
+                                        <label class="form-check-label fw-bold" for="rt1">RC MEMBER</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="regType" id="rt2"
-                                            value="RC MEMBER(WITH LUNCH)" data-amount="1500">
-                                        <label class="form-check-label fw-bold" for="rt2">RC MEMBER (WITH LUNCH)</label>
+                                            value="DELEGATES (WITH LUNCH)" data-amount="1500">
+                                        <label class="form-check-label fw-bold" for="rt2">DELEGATES (WITH LUNCH)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="regType" id="rt3"
-                                            value="RC MEMBER" data-amount="1000">
-                                        <label class="form-check-label fw-bold" for="rt3">RC MEMBER</label>
+                                            value="DELEGATES" data-amount="1000">
+                                        <label class="form-check-label fw-bold" for="rt3">DELEGATES</label>
                                     </div>
                                 </div>
                                 <div class="form-check mt-3" id="banquetAddonSection" style="display:none;">
@@ -602,7 +601,7 @@
                 // SPECIAL LOGIC: 
                 // If "DELEGATE WITH BANQUET" (contains 'BANQUET') -> Hide Addon (It's included)
                 // If Others -> Show Addon
-                if (currentType.includes("DELEGATE WITH BANQUET")) {
+                if (currentType.includes("RC MEMBER")) {
                     banquetSection.style.display = "none";
                     banquetAddon.checked = true; // Force check internally if we want logic, but simpler to just ignore it
                     // Actually, if it's hidden, user can't click.
