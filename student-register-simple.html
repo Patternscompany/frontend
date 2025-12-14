@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration - TGSDC 2026</title>
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .simple-form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .btn-primary-custom {
+            background-color: #0a6ebd;
+            border-color: #0a6ebd;
+            color: #fff;
+            padding: 12px;
+            font-weight: 600;
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #085a9c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="simple-form-container">
+            <div class="text-center mb-4">
+                <img src="assets/img/trant-logo.png" alt="Logo" style="max-height: 80px;">
+                <h3 class="mt-3">Student Registration</h3>
+            </div>
+
+            <form id="simpleStudentForm">
+                <!-- Name -->
+                <div class="mb-3">
+                    <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="form-control" placeholder="Enter Full Name" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter Email" required>
+                </div>
+
+                <!-- Mobile -->
+                <div class="mb-3">
+                    <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+                    <input type="tel" name="mobile" class="form-control" placeholder="Enter Mobile Number"
+                        pattern="[0-9]{10}" maxlength="10"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                        title="Please enter exactly 10 digits" required>
+                </div>
+
+                <!-- College -->
+                <div class="mb-3">
+                    <label class="form-label">College <span class="text-danger">*</span></label>
+                    <select name="college" id="collegeSelect" class="form-select" required>
+                        <option value="">Select College</option>
+                        <option value="Army College of Dental Sciences, Secunderabad">Army College of Dental Sciences,
+                            Secunderabad</option>
+                        <option value="Government Dental College and Hospital, Hyderabad">Government Dental College and
+                            Hospital, Hyderabad</option>
+                        <option value="Kamineni Institute of Dental Sciences, Narketpally">Kamineni Institute of Dental
+                            Sciences, Narketpally</option>
+                        <option value="Mamata Dental College, Khammam">Mamata Dental College, Khammam</option>
+                        <option value="Mamata Dental College, Bachupally">Mamata Dental College, Bachupally</option>
+                        <option value="Malla Reddy Institute of Dental Sciences, Hyderabad">Malla Reddy Institute of
+                            Dental Sciences, Hyderabad</option>
+                        <option value="Meghna Institute of Dental Sciences, Nizamabad">Meghna Institute of Dental
+                            Sciences, Nizamabad</option>
+                        <option value="Malla Reddy Dental College for Women, Hyderabad">Malla Reddy Dental College for
+                            Women, Hyderabad</option>
+                        <option value="Sri Balaji Dental College and Hospital, Hyderabad">Sri Balaji Dental College and
+                            Hospital, Hyderabad</option>
+                        <option value="Panineeya Institute of Dental Sciences and Research Centre, Hyderabad">Panineeya
+                            Institute of Dental Sciences and Research Centre, Hyderabad</option>
+                        <option value="SVS Institute of Dental Sciences, Mahabubnagar">SVS Institute of Dental Sciences,
+                            Mahabubnagar</option>
+                        <option value="Sri Sai College of Dental Surgery, Vikarabad">Sri Sai College of Dental Surgery,
+                            Vikarabad</option>
+                        <option value="MNR Dental College and Hospital, Sangareddy">MNR Dental College and Hospital,
+                            Sangareddy</option>
+                        <option value="Tirumala Institute of Dental Sciences and Research Centre, Nizamabad">Tirumala
+                            Institute of Dental Sciences and Research Centre, Nizamabad</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <!-- Manual Input for Other -->
+                    <input type="text" name="college_manual" id="collegeManual" class="form-control mt-2"
+                        placeholder="Enter College Name" style="display:none;">
+                </div>
+
+                <!-- Year -->
+                <div class="mb-3">
+                    <label class="form-label">Year of Study <span class="text-danger">*</span></label>
+                    <select name="study_year" class="form-select" required>
+                        <option value="">Select Year</option>
+                        <option value="1st BDS">1st BDS</option>
+                        <option value="2nd BDS">2nd BDS</option>
+                        <option value="3rd BDS">3rd BDS</option>
+                        <option value="4th BDS">4th BDS</option>
+
+                    </select>
+                </div>
+
+                <!-- Category -->
+                <div class="mb-4">
+                    <label class="form-label d-block">Registration Category <span class="text-danger">*</span></label>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="regType" id="rt1" value="STUDENT"
+                            data-amount="500" required>
+                        <label class="form-check-label" for="rt1">Normal Registration (₹500)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="regType" id="rt2" value="STUDENT(WITH LUNCH)"
+                            data-amount="1000">
+                        <label class="form-check-label" for="rt2">Registration + Lunch (₹1000)</label>
+                    </div>
+                </div>
+
+                <input type="hidden" name="amount" id="finalAmount">
+                <input type="hidden" name="reg_type" id="finalType">
+
+                <button type="submit" class="btn btn-primary-custom" id="submitBtn">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONFIG -->
+    <script>
+        // Use the same base URL logic as checkout
+        const API_BASE_URL = "http://localhost:5000"; 
+    </script>
+
+    <script>
+        const form = document.getElementById("simpleStudentForm");
+        const submitBtn = document.getElementById("submitBtn");
+        const collegeSelect = document.getElementById("collegeSelect");
+        const collegeManual = document.getElementById("collegeManual");
+
+        // Toggle Manual College Input
+        collegeSelect.addEventListener("change", function () {
+            if (this.value === "Other") {
+                collegeManual.style.display = "block";
+                collegeManual.required = true;
+            } else {
+                collegeManual.style.display = "none";
+                collegeManual.required = false;
+                collegeManual.value = "";
+            }
+        });
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Get selected radio
+            const selectedRadio = document.querySelector('input[name="regType"]:checked');
+            if (!selectedRadio) {
+                alert("Please select a category");
+                return;
+            }
+
+            const amount = selectedRadio.getAttribute("data-amount");
+            const type = selectedRadio.value;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Processing...";
+
+            try {
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                // Explicitly set amount and type
+                data.amount = amount;
+                data.reg_type = type;
+
+                // Send to Backend
+                let res = await fetch(`${API_BASE_URL}/api/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                if (!res.ok) throw new Error("Server Error: " + res.statusText);
+
+                let result = await res.json();
+                if (!result.success) throw new Error(result.error);
+
+                // Store for Checkout
+                const checkoutData = {
+                    reg_id: result.reg_id,
+                    amount: amount,
+                    name: data.name,
+                    email: data.email,
+                    mobile: data.mobile,
+                    reg_type: type
+                };
+
+                localStorage.setItem("reg_payload", JSON.stringify(checkoutData));
+                window.location.href = "checkout.html";
+
+            } catch (err) {
+                console.error(err);
+                alert("Error: " + err.message);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Proceed to Payment";
+            }
+        });
+    </script>
+
+</body>
+
+</html>
