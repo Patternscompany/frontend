@@ -2,14 +2,24 @@
 
   $(document).ready(function () {
 
-    //========== HEADER ACTIVE STRATS ============= //
-    if ($("#header").length > 0) {
+    //========== HEADER ACTIVE START ============= //
+    if ($("#header").length > 0 || $(".mobile-header").length > 0) {
       $(window).on("scroll", function (event) {
         var scroll = $(window).scrollTop();
-        if (scroll < 1) {
+        var bannerHeight = $(".top-banner-area").outerHeight() || 0;
+
+        // Sticky logic for Desktop
+        if (scroll < bannerHeight) {
           $(".header-area").removeClass("sticky");
         } else {
           $(".header-area").addClass("sticky");
+        }
+
+        // Sticky logic for Mobile
+        if (scroll < bannerHeight) {
+          $(".mobile-header").removeClass("sticky");
+        } else {
+          $(".mobile-header").addClass("sticky");
         }
       });
     }
@@ -656,7 +666,7 @@ function startCountdown(targetDate, daysId, hoursId, minutesId, secondsId) {
 // targetDate.setHours(targetDate.getHours() + 10);
 // targetDate.setMinutes(targetDate.getMinutes() + 18);
 // targetDate.setSeconds(targetDate.getSeconds() + 44);
-var targetDate = new Date(2026, 0, 24, 10, 0, 0); 
+var targetDate = new Date(2026, 0, 24, 10, 0, 0);
 
 startCountdown(targetDate, "days", "hours", "minutes", "seconds");
 startCountdown(targetDate, "days1", "hours1", "minutes1", "seconds1");
