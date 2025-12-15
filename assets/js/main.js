@@ -651,11 +651,7 @@ function startCountdown(targetDate, daysId, hoursId, minutesId, secondsId) {
   }, 1000);
 }
 
-var targetDate = new Date();
-targetDate.setDate(targetDate.getDate() + 48);
-targetDate.setHours(targetDate.getHours() + 10);
-targetDate.setMinutes(targetDate.getMinutes() + 18);
-targetDate.setSeconds(targetDate.getSeconds() + 44);
+var targetDate = new Date("Jan 24, 2026 09:00:00");
 
 startCountdown(targetDate, "days", "hours", "minutes", "seconds");
 startCountdown(targetDate, "days1", "hours1", "minutes1", "seconds1");
