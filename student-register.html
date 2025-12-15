@@ -336,7 +336,9 @@
                 <!-- MOBILE -->
                 <div class="col-md-4">
                     <label class="form-label">Mobile <span class="text-danger">*</span></label>
-                    <input type="text" name="mobile" class="form-control" required>
+                    <input type="text" name="mobile" class="form-control" pattern="[0-9]{10}" maxlength="10"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                        title="Please enter exactly 10 digits" required>
                 </div>
                 <div id="studentDetails" class="row g-3" style="display:none;">
 
