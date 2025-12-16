@@ -14897,7 +14897,9 @@ html {
 
 @media (max-width: 767px) {
   .others4-section-area .others-bg .others-times-area .timer {
-    display: block;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     margin: 0 auto !important;
     text-align: center;
   }
@@ -14914,9 +14916,21 @@ html {
 
 @media (max-width: 767px) {
   .others4-section-area .others-bg .others-times-area .timer .time-box {
-    width: 150px;
-    margin: 0 auto 30px auto !important;
+    width: auto;
+    flex: 1;
+    padding: 10px 5px;
+    margin: 0 !important;
     text-align: center;
+  }
+
+  .others4-section-area .others-bg .others-times-area .timer .time-box .time-value {
+    font-size: 24px !important;
+    line-height: 28px !important;
+  }
+
+  .others4-section-area .others-bg .others-times-area .timer .time-box .time-value span {
+    font-size: 10px !important;
+    line-height: 12px !important;
   }
 }
 
@@ -19793,7 +19807,9 @@ html {
 
 @media (max-width: 767px) {
   .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     text-align: center;
     margin: 0 auto;
   }
@@ -19821,7 +19837,20 @@ html {
 @media (max-width: 767px) {
   .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer .time-box {
     margin: 0 0 20px 0;
+    width: auto;
+    flex: 1;
+    padding: 10px 5px;
     display: block;
+  }
+
+  .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer .time-box .time-value {
+    font-size: 24px !important;
+    line-height: 28px !important;
+  }
+
+  .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer .time-box .time-value span {
+    font-size: 10px !important;
+    line-height: 12px !important;
   }
 }
 
@@ -27588,60 +27617,86 @@ html {
 /* Custom Dropdown Styles */
 .main-menu ul li {
   position: relative;
+  margin-right: 15px !important;
+  /* Reduced from default to fit one line */
 }
 
-.main-menu ul li .sub-menu {
+.main-menu ul li:last-child {
+  margin-right: 0 !important;
+}
+
+.main-menu ul li a {
+  padding: 25px 0 !important;
+  /* consistent vertical padding */
+  font-size: 15px !important;
+  /* Slightly smaller font if needed */
+}
+
+.btn-area .vl-btn2 {
+  padding: 12px 20px !important;
+  /* Compact button */
+  font-size: 14px !important;
+}
+
+.header-elements {
+  justify-content: space-between !important;
+}
+
+/* Ensure container-fluid works for width */
+.header-area .container-fluid {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+/* Specific fix for dropdowns */
+.dropdown-padding {
+  padding: 15px 0;
+  border-radius: 0 0 5px 5px;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: 100%;
   left: 0;
-  width: 280px;
-  background: #fff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 260px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px);
   transition: all 0.3s ease;
-  z-index: 9999;
-  padding: 10px 0;
-  border-radius: 0 0 4px 4px;
+  transform: translateY(10px);
+  z-index: 999999 !important;
   border-top: 3px solid #fa6823;
 }
 
-.main-menu ul li:hover .sub-menu {
+.main-menu ul li:hover .dropdown-padding {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.main-menu ul li .sub-menu li {
+.dropdown-padding li {
   display: block;
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #f0f0f0;
+  margin-right: 0 !important;
+  border-bottom: 1px solid #f1f1f1;
 }
 
-.main-menu ul li .sub-menu li:last-child {
+.dropdown-padding li:last-child {
   border-bottom: none;
 }
 
-.main-menu ul li .sub-menu li a {
+.dropdown-padding li a {
+  padding: 10px 20px !important;
   display: block;
-  padding: 10px 15px;
-  font-size: 14px;
-  font-weight: 500;
   color: #333;
-  line-height: 1.4;
-  text-transform: capitalize;
-  text-align: left;
+  font-size: 14px !important;
+  line-height: 1.5;
+  text-transform: none;
 }
 
-.main-menu ul li .sub-menu li a:hover {
-  background: #f9f9f9;
+.dropdown-padding li a:hover {
   color: #fa6823;
-  padding-left: 20px;
+  padding-left: 25px !important;
 }
 
-/* Force Overflow Visible for Dropdown */
+/* Fix for header overflow clipping dropdowns */
 .header-area,
 .header-elements,
 .header-elements .main-menu {
