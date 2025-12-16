@@ -292,8 +292,9 @@
                                 Banquet
                                 Pass.</p>
                             <div class="input-group mb-3" style="max-width: 400px; margin: 0 auto;">
-                                <input type="text" name="checkMobile" class="form-control" pattern="[0-9]{10}"
-                                    maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                                <input type="text" id="checkMobile" name="checkMobile" class="form-control"
+                                    pattern="[0-9]{10}" maxlength="10"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
                                     title="Please enter exactly 10 digits">
                                 <button class="btn btn-primary" type="button" id="btnCheckStatus">Check</button>
                             </div>
@@ -680,7 +681,7 @@
 
             try {
                 // Find user by Mobile
-                const res = await fetch("http://localhost:5000/api/check-status", {
+                const res = await fetch(`${API_BASE_URL}/api/check-status`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ mobile: mobile })
