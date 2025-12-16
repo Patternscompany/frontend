@@ -14897,7 +14897,9 @@ html {
 
 @media (max-width: 767px) {
   .others4-section-area .others-bg .others-times-area .timer {
-    display: block;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     margin: 0 auto !important;
     text-align: center;
   }
@@ -14914,9 +14916,21 @@ html {
 
 @media (max-width: 767px) {
   .others4-section-area .others-bg .others-times-area .timer .time-box {
-    width: 150px;
-    margin: 0 auto 30px auto !important;
+    width: auto;
+    flex: 1;
+    padding: 10px 5px;
+    margin: 0 !important;
     text-align: center;
+  }
+
+  .others4-section-area .others-bg .others-times-area .timer .time-box .time-value {
+    font-size: 24px !important;
+    line-height: 28px !important;
+  }
+
+  .others4-section-area .others-bg .others-times-area .timer .time-box .time-value span {
+    font-size: 10px !important;
+    line-height: 12px !important;
   }
 }
 
@@ -19793,7 +19807,9 @@ html {
 
 @media (max-width: 767px) {
   .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     text-align: center;
     margin: 0 auto;
   }
@@ -19821,7 +19837,20 @@ html {
 @media (max-width: 767px) {
   .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer .time-box {
     margin: 0 0 20px 0;
+    width: auto;
+    flex: 1;
+    padding: 10px 5px;
     display: block;
+  }
+
+  .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer .time-box .time-value {
+    font-size: 24px !important;
+    line-height: 28px !important;
+  }
+
+  .cta1-section-area .cta1-main-boxarea .timer-btn-area .timer .time-box .time-value span {
+    font-size: 10px !important;
+    line-height: 12px !important;
   }
 }
 
