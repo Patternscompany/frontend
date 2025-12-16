@@ -273,11 +273,13 @@
                     <div class="col-md-8 text-center">
                         <div class="alert alert-info">
                             <h5>Already Registered? Buy Banquet Pass</h5>
-                            <p class="small">If you are a registered Doctor/RC Member, enter your Email to buy a Banquet
+                            <p class="small">If you are a registered Doctor/RC Member, enter your Phone Number to buy a
+                                Banquet
                                 Pass.</p>
                             <div class="input-group mb-3" style="max-width: 400px; margin: 0 auto;">
-                                <input type="email" id="checkEmail" class="form-control"
-                                    placeholder="Enter Registered Email Address">
+                                <input type="text" name="checkMobile" class="form-control" pattern="[0-9]{10}"
+                                    maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                                    title="Please enter exactly 10 digits">
                                 <button class="btn btn-primary" type="button" id="btnCheckStatus">Check</button>
                             </div>
                             <small id="statusMsg" class="text-danger"></small>
@@ -652,26 +654,26 @@
 
         // 2. BANQUET UPGRADE CHECK LOGIC (EMAIL BASED)
         document.getElementById("btnCheckStatus").onclick = async () => {
-            const email = document.getElementById("checkEmail").value.trim();
+            const mobile = document.getElementById("checkMobile").value.trim();
             const msg = document.getElementById("statusMsg");
 
-            if (!email) {
-                msg.innerText = "Please enter your registered Email Address";
+            if (!mobile) {
+                msg.innerText = "Please enter your registered Mobile Number";
                 return;
             }
             msg.innerText = "Verifying...";
 
             try {
-                // Find user by Email
+                // Find user by Mobile
                 const res = await fetch("http://localhost:5000/api/check-status", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: email })
+                    body: JSON.stringify({ mobile: mobile })
                 });
                 const data = await res.json();
 
                 if (data.success) {
-                    msg.innerText = "Email Verified! Creating Upgrade Order...";
+                    msg.innerText = "Number Verified! Creating Upgrade Order...";
 
                     // Create New Registration (Banquet Pass) with EXISTING ID
                     const upgradePayload = {
