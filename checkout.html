@@ -165,6 +165,7 @@
                     <div class="text-center mb-5">
                         <p class="mb-2">Total Amount to Pay</p>
                         <div class="amount-display">₹ <span id="displayAmount">0</span></div>
+                        <p class="text-muted">+ (2% Platform Fee)</p>
                     </div>
 
                     <div class="checkout-details mb-4">
@@ -345,9 +346,14 @@
             }
 
             regData = JSON.parse(storedData);
+            const amount = Number(regData.amount); // base amount
+            const percentage = 2; // 2% charge
+
+            const charge = (amount * percentage) / 100;
+            const totalAmount = amount + charge;
 
             // Populate UI
-            document.getElementById("displayAmount").innerText = regData.amount;
+            document.getElementById("displayAmount").innerText = totalAmount;
             document.getElementById("dispRegId").innerText = regData.reg_id;
             document.getElementById("dispName").innerText = regData.name;
             document.getElementById("dispCategory").innerText = regData.reg_type;
@@ -368,12 +374,18 @@
                 let keyJson = await keyRes.json();
                 const RAZORPAY_KEY = keyJson.key;
 
+                // Recalculate Total Amount with 2% fee
+                const amount = Number(regData.amount);
+                const percentage = 2;
+                const charge = (amount * percentage) / 100;
+                const totalAmount = Math.round(amount + charge); // Rounding is safer for payment gateways
+
                 // 2️⃣ CREATE ORDER
                 let orderRes = await fetch(`${API_BASE_URL}/api/create-order`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        amount: regData.amount,
+                        amount: totalAmount,
                         reg_id: regData.reg_id
                     })
                 });
