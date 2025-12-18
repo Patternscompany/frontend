@@ -27759,3 +27759,201 @@ html {
   color: #fa6823;
   padding-left: 20px;
 }
+
+/* Confirmation Help Button & Text Ring */
+.confirmation-help-btn {
+  position: fixed;
+  bottom: 110px;
+  right: 30px;
+  width: 120px;
+  height: 120px;
+  z-index: 9999;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* Central Red Circle with Icon */
+.confirmation-help-btn .icon-circle {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #FF0000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.confirmation-help-btn .icon-circle::before {
+  content: "\f0e0";
+  /* Envelope icon */
+  font-family: "FontAwesome";
+  font-size: 20px;
+  color: #ffffff;
+}
+
+/* Hover Effect on Circle */
+.confirmation-help-btn:hover .icon-circle {
+  background-color: #cc0000;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
+}
+
+/* Rotating Text Ring */
+.confirmation-help-btn .text-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: rotateText 10s linear infinite;
+  pointer-events: none;
+  /* Let clicks pass through to the link */
+}
+
+@keyframes rotateText {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.confirmation-help-btn .text-ring svg {
+  width: 100%;
+  height: 100%;
+}
+
+.confirmation-help-btn .text-ring text {
+  font-family: var(--ztc-family-font1);
+  font-weight: 600;
+  font-size: 13.5px;
+  text-transform: uppercase;
+  fill: #333;
+  /* Text color */
+  letter-spacing: 2px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .confirmation-help-btn {
+    bottom: 110px;
+    right: 30px;
+    left: auto;
+    width: 100px;
+    /* Slightly smaller on mobile */
+    height: 100px;
+  }
+
+  .confirmation-help-btn .icon-circle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .confirmation-help-btn .icon-circle::before {
+    font-size: 16px;
+  }
+
+  .confirmation-help-btn .text-ring text {
+    font-size: 12px;
+  }
+}
+
+/* Disco Light Effect */
+.inner-page-header {
+  position: relative;
+  z-index: 1;
+}
+
+.inner-page-header .container {
+  position: relative;
+  z-index: 5;
+}
+
+.disco-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.light-beam {
+  position: absolute;
+  top: -250px;
+  right: -250px;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.8;
+  transform-origin: center;
+  mix-blend-mode: screen;
+}
+
+.b1 {
+  background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255, 0, 128, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 4s infinite linear;
+}
+
+.b2 {
+  background: conic-gradient(from 120deg at 50% 50%, transparent 0deg, rgba(0, 255, 255, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 5s infinite linear reverse;
+}
+
+.b3 {
+  background: conic-gradient(from 240deg at 50% 50%, transparent 0deg, rgba(255, 255, 0, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 6s infinite linear;
+}
+
+.b4 {
+  background: conic-gradient(from 60deg at 50% 50%, transparent 0deg, rgba(0, 255, 0, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 7s infinite linear reverse;
+}
+
+.disco-flash {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 80px 40px rgba(255, 255, 255, 1);
+  animation: flash 0.3s infinite alternate;
+  z-index: 2;
+}
+
+@keyframes beam-rotate {
+  0% {
+    transform: rotate(0deg) scale(1.5);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
