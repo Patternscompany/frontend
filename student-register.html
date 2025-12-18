@@ -305,16 +305,12 @@
                 <div class="col-12">
                     <label class="form-label d-block">Title <span class="text-danger">*</span></label>
                     <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="title" id="title1" value="Dr" required>
-                        <label class="btn btn-outline-secondary" for="title1">Dr.</label>
-                        <input type="radio" class="btn-check" name="title" id="title2" value="Prof">
-                        <label class="btn btn-outline-secondary" for="title2">Prof.</label>
-                        <input type="radio" class="btn-check" name="title" id="title3" value="Mr">
-                        <label class="btn btn-outline-secondary" for="title3">Mr.</label>
-                        <input type="radio" class="btn-check" name="title" id="title4" value="Ms">
-                        <label class="btn btn-outline-secondary" for="title4">Ms.</label>
-                        <input type="radio" class="btn-check" name="title" id="title5" value="Mrs">
-                        <label class="btn btn-outline-secondary" for="title5">Mrs.</label>
+                        <input type="radio" class="btn-check" name="title" id="title1" value="Mr">
+                        <label class="btn btn-outline-secondary" for="title1">Mr.</label>
+                        <input type="radio" class="btn-check" name="title" id="title2" value="Ms">
+                        <label class="btn btn-outline-secondary" for="title2">Ms.</label>
+                        <input type="radio" class="btn-check" name="title" id="title3" value="Mrs">
+                        <label class="btn btn-outline-secondary" for="title3">Mrs.</label>
                     </div>
                 </div>
 
@@ -885,7 +881,16 @@
             const form = document.getElementById("fullForm");
 
             // CHECK VALIDATION FIRST
-            if (!form.checkValidity()) {
+            // 1. VALIDATE TITLE
+            const titleSelected = document.querySelector('input[name="title"]:checked');
+            if (!titleSelected) {
+                alert("Please Select Title");
+                showFormBtn.disabled = false;
+                showFormBtn.innerText = "Proceed to Payment";
+                return;
+            }
+
+            if (!checkValidity()) {
                 form.reportValidity(); // Shows the browser validation UI
                 return; // Stop execution
             }

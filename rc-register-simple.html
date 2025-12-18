@@ -52,6 +52,16 @@
             </div>
 
             <form id="simpleRCForm">
+                <!-- TITLE -->
+                <div class="col-12">
+                    <label class="form-label d-block">Title <span class="text-danger">*</span></label>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="title" id="title1" value="Dr" required>
+                        <label class="btn btn-outline-secondary" for="title1">Dr.</label>
+                        <input type="radio" class="btn-check" name="title" id="title2" value="Prof">
+                        <label class="btn btn-outline-secondary" for="title2">Prof.</label>
+                    </div>
+                </div>
                 <!-- Name -->
                 <div class="mb-3">
                     <label class="form-label">Full Name <span class="text-danger">*</span></label>
@@ -194,6 +204,12 @@
 
             if (!form.checkValidity()) {
                 form.reportValidity();
+                return;
+            }
+
+            const titleSelected = document.querySelector('input[name="title"]:checked');
+            if (!titleSelected) {
+                alert("Please Select Title");
                 return;
             }
 

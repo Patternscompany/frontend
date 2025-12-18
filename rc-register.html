@@ -338,12 +338,6 @@
                         <label class="btn btn-outline-secondary" for="title1">Dr.</label>
                         <input type="radio" class="btn-check" name="title" id="title2" value="Prof">
                         <label class="btn btn-outline-secondary" for="title2">Prof.</label>
-                        <input type="radio" class="btn-check" name="title" id="title3" value="Mr">
-                        <label class="btn btn-outline-secondary" for="title3">Mr.</label>
-                        <input type="radio" class="btn-check" name="title" id="title4" value="Ms">
-                        <label class="btn btn-outline-secondary" for="title4">Ms.</label>
-                        <input type="radio" class="btn-check" name="title" id="title5" value="Mrs">
-                        <label class="btn btn-outline-secondary" for="title5">Mrs.</label>
                     </div>
                 </div>
 
@@ -596,6 +590,9 @@
 
     </div>
 
+    <script>
+        const API_BASE_URL = "http://localhost:5000";
+    </script>
 
     <script>
         // 1. DYNAMIC AMOUNT & CHECKBOX LOGIC
@@ -974,6 +971,15 @@
             const form = document.getElementById("fullForm");
 
             // CHECK VALIDATION FIRST
+            // 1. VALIDATE TITLE
+            const titleSelected = document.querySelector('input[name="title"]:checked');
+            if (!titleSelected) {
+                alert("Please Select Title");
+                showFormBtn.disabled = false;
+                showFormBtn.innerText = "Proceed to Payment";
+                return;
+            }
+
             if (!form.checkValidity()) {
                 form.reportValidity(); // Shows the browser validation UI
                 return; // Stop execution
