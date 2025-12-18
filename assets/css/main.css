@@ -27867,3 +27867,93 @@ html {
     font-size: 12px;
   }
 }
+
+/* Disco Light Effect */
+.inner-page-header {
+  position: relative;
+  z-index: 1;
+}
+
+.inner-page-header .container {
+  position: relative;
+  z-index: 5;
+}
+
+.disco-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.light-beam {
+  position: absolute;
+  top: -250px;
+  right: -250px;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.8;
+  transform-origin: center;
+  mix-blend-mode: screen;
+}
+
+.b1 {
+  background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255, 0, 128, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 4s infinite linear;
+}
+
+.b2 {
+  background: conic-gradient(from 120deg at 50% 50%, transparent 0deg, rgba(0, 255, 255, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 5s infinite linear reverse;
+}
+
+.b3 {
+  background: conic-gradient(from 240deg at 50% 50%, transparent 0deg, rgba(255, 255, 0, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 6s infinite linear;
+}
+
+.b4 {
+  background: conic-gradient(from 60deg at 50% 50%, transparent 0deg, rgba(0, 255, 0, 0.8) 25deg, transparent 50deg);
+  animation: beam-rotate 7s infinite linear reverse;
+}
+
+.disco-flash {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 80px 40px rgba(255, 255, 255, 1);
+  animation: flash 0.3s infinite alternate;
+  z-index: 2;
+}
+
+@keyframes beam-rotate {
+  0% {
+    transform: rotate(0deg) scale(1.5);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
