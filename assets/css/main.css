@@ -9342,7 +9342,7 @@ html {
   position: absolute;
   background: var(--ztc-text-text-1);
   top: 100px;
-  width: 225px;
+  width: 300px;
   z-index: 1;
   transition: all 0.4s;
   border-radius: 5px;
@@ -9713,7 +9713,7 @@ html {
   background: var(--ztc-text-text-1);
   top: 201.3%;
   transform: scale(1, 0);
-  width: 225px;
+  width: 300px;
   z-index: 0;
   transition: all 0.4s;
   border-radius: 5px;
@@ -10195,7 +10195,7 @@ html {
   background: var(--ztc-text-text-1);
   top: 201.3%;
   transform: scale(1, 0);
-  width: 225px;
+  width: 300px;
   z-index: 0;
   transition: all 0.4s;
   border-radius: 5px;
@@ -10689,7 +10689,7 @@ html {
   background: var(--ztc-text-text-1);
   top: 201.3%;
   transform: scale(1, 0);
-  width: 225px;
+  width: 300px;
   z-index: 0;
   transition: all 0.4s;
   border-radius: 5px;
@@ -11105,7 +11105,7 @@ html {
   background: var(--ztc-text-text-1);
   top: 201.3%;
   transform: scale(1, 0);
-  width: 225px;
+  width: 300px;
   z-index: 0;
   transition: all 0.4s;
   border-radius: 5px;
@@ -27714,7 +27714,7 @@ html {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 280px;
+  width: 300px;
   background: #fff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   opacity: 0;
