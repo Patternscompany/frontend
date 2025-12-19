@@ -27957,3 +27957,133 @@ html {
     transform: scale(1.5);
   }
 }
+/* Cultural Page Styles */
+.highlight-box {
+  background: #fff;
+  padding: 30px 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+.highlight-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.highlight-box .icon-box {
+  font-size: 40px;
+  color: #ff6700;
+  margin-bottom: 20px;
+}
+.highlight-box h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.cultural-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+.cultural-card:hover {
+  border-color: #ff6700;
+  transform: translateY(-5px);
+}
+.cultural-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #1a1719;
+}
+
+.info-box-styled {
+  background: #f9f9f9;
+  padding: 40px;
+  border-radius: 12px;
+  height: 100%;
+}
+.info-box-styled h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff6700;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+.info-box-styled ul {
+  padding: 0;
+  list-style: none;
+}
+.info-box-styled ul li {
+  margin-bottom: 15px;
+  font-size: 16px;
+  display: flex;
+  align-items: flex-start;
+}
+.info-box-styled ul li i {
+  color: #ff6700;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.schedule-box {
+  background: linear-gradient(135deg, #1a1719 0%, #2a2a2a 100%);
+  padding: 50px;
+  border-radius: 12px;
+  color: white;
+}
+.schedule-box h3 {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+}
+.schedule-item i {
+  font-size: 30px;
+  color: #ff6700;
+  margin-bottom: 15px;
+}
+.schedule-item h5 {
+  color: white;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+.schedule-item p {
+  color: rgba(255,255,255,0.8);
+}
+
+.cta-box {
+  background: #fff;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  border-top: 5px solid #ff6700;
+}
+
+.contact-card-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  margin-bottom: 30px;
+}
+.contact-card-box h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #ff6700;
+}
+.map-link {
+  color: #1a1719;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.map-link:hover {
+  color: #ff6700;
+}
