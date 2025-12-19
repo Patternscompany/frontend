@@ -27764,7 +27764,7 @@ html {
 .confirmation-help-btn {
   position: fixed;
   bottom: 110px;
-  right: 30px;
+  right: 20px;
   width: 80px;
   height: 80px;
   z-index: 9999;
@@ -27847,7 +27847,7 @@ html {
 @media (max-width: 767px) {
   .confirmation-help-btn {
     bottom: 110px;
-    right: 30px;
+    right: 20px;
     left: auto;
     width: 100px;
     /* Slightly smaller on mobile */
