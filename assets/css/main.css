@@ -27765,8 +27765,8 @@ html {
   position: fixed;
   bottom: 110px;
   right: 30px;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   z-index: 9999;
   display: flex !important;
   align-items: center;
@@ -27780,8 +27780,8 @@ html {
 /* Central Red Circle with Icon */
 .confirmation-help-btn .icon-circle {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background-color: #FF0000;
   border-radius: 50%;
   display: flex;
@@ -27836,7 +27836,7 @@ html {
 .confirmation-help-btn .text-ring text {
   font-family: var(--ztc-family-font1);
   font-weight: 600;
-  font-size: 13.5px;
+  font-size: 9px;
   text-transform: uppercase;
   fill: #333;
   /* Text color */
