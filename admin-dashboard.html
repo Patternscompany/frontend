@@ -164,7 +164,8 @@
             <div class="col-md-3 mb-2">
                 <select id="filterCategory" class="form-select" onchange="applyFilters()">
                     <option value="">All Categories</option>
-                    <option value="RC MEMBER">RC Members (All Types)</option>
+                    <option value="RC MEMBER">RC Members</option>
+                    <option value="DELEGATES">Delegates</option>
                     <option value="STUDENT">Students</option>
                     <option value="BANQUET">Banquet Pass Only</option>
                 </select>
@@ -307,6 +308,7 @@
                             <small class="text-muted">${item.mobile}</small>
                         </td>
                         <td><small>${item.reg_type}</small></td>
+                        <td><small>${item.organization}</small></td>
                         <td>₹${item.amount}</td>
                         <td><span class="${statusClass}">${item.payment_status || 'Pending'}</span></td>
                         <td>
