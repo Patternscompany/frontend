@@ -308,7 +308,7 @@
                             <small class="text-muted">${item.mobile}</small>
                         </td>
                         <td><small>${item.reg_type}</small></td>
-                        <td><small>${item.organization}</small></td>
+                        <td><small>${item.organization || item.college}</small></td>
                         <td>₹${item.amount}</td>
                         <td><span class="${statusClass}">${item.payment_status || 'Pending'}</span></td>
                         <td>
