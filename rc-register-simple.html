@@ -148,20 +148,34 @@
                 <!-- Category -->
                 <div class="mb-4">
                     <label class="form-label d-block">Registration Category <span class="text-danger">*</span></label>
+
+                    <!-- RC MEMBER -->
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="regType" id="rt1" value="RC MEMBER"
                             data-amount="3500" required>
                         <label class="form-check-label" for="rt1">RC MEMBER (₹3500)</label>
                     </div>
+
+                    <!-- DELEGATE -->
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="regType" id="rt2"
-                            value="DELEGATES (WITH LUNCH)" data-amount="1500">
+                            value="DELEGATE(WITH LUNCH)" data-amount="1500">
                         <label class="form-check-label" for="rt2">DELEGATE (WITH LUNCH) (₹1500)</label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="regType" id="rt3" value="DELEGATES"
+
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="regType" id="rt3" value="DELEGATE"
                             data-amount="1000">
                         <label class="form-check-label" for="rt3">DELEGATE (₹1000)</label>
+                    </div>
+
+                    <!-- BANQUET ADD-ON (Hidden for RC Member) -->
+                    <div class="form-check mt-3 ps-4" id="banquetSection" style="display: none;">
+                        <input class="form-check-input" type="checkbox" id="banquetAddon" value="2000">
+                        <label class="form-check-label fw-bold text-primary" for="banquetAddon">
+                            Add Banquet Pass (+ ₹2000)
+                        </label>
+                        <div class="form-text small">Create memories with fellow delegates!</div>
                     </div>
                 </div>
 
@@ -186,6 +200,25 @@
         const submitBtn = document.getElementById("submitBtn");
         const orgSelect = document.getElementById("orgSelect");
         const orgManual = document.getElementById("orgManual");
+
+        // BANQUET LOGIC
+        const banquetSection = document.getElementById("banquetSection");
+        const banquetCheckbox = document.getElementById("banquetAddon");
+        const radios = document.querySelectorAll('input[name="regType"]');
+
+        // Toggle Banquet Option based on Category
+        radios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.value.includes("RC MEMBER")) {
+                    // RC Member: Hide and Uncheck
+                    banquetSection.style.display = "none";
+                    banquetCheckbox.checked = false;
+                } else {
+                    // Delegate: Show
+                    banquetSection.style.display = "block";
+                }
+            });
+        });
 
         // Toggle Manual Input
         orgSelect.addEventListener("change", function () {
@@ -220,8 +253,15 @@
                 return;
             }
 
-            const amount = selectedRadio.getAttribute("data-amount");
-            const type = selectedRadio.value;
+            // CALCULATE AMOUNT
+            let amount = parseInt(selectedRadio.getAttribute("data-amount"));
+            let type = selectedRadio.value;
+
+            // Check Banquet
+            if (banquetCheckbox.checked && banquetSection.style.display !== "none") {
+                amount += 2000;
+                type += " + Banquet Pass";
+            }
 
             submitBtn.disabled = true;
             submitBtn.innerText = "Processing...";
@@ -269,7 +309,7 @@
                 console.error(err);
                 alert("Error: " + err.message);
                 submitBtn.disabled = false;
-                submitBtn.innerText = "Proceed to Payment (₹3500)";
+                submitBtn.innerText = "Proceed to Payment";
             }
         });
     </script>
