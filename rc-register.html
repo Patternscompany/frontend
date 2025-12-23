@@ -630,13 +630,10 @@
                 let currentType = selected.value;
 
                 // SPECIAL LOGIC: 
-                // If "DELEGATE WITH BANQUET" (contains 'BANQUET') -> Hide Addon (It's included)
-                // If Others -> Show Addon
+                // If "RC MEMBER" -> Hide Addon (It's included in base price, don't add 2000)
                 if (currentType.includes("RC MEMBER")) {
                     banquetSection.style.display = "none";
-                    banquetAddon.checked = true; // Force check internally if we want logic, but simpler to just ignore it
-                    // Actually, if it's hidden, user can't click.
-                    // We just use baseAmt (3500) which includes it.
+                    banquetAddon.checked = false; // Fix: Uncheck so we don't add extra 2000
                 } else {
                     banquetSection.style.display = "block";
                     // Check if addon selected
@@ -827,29 +824,31 @@
         // const idaMemberRadios removed from logic loop
 
         function updateColleagueFields() {
-            const count = parseInt(colleagueInput.value) || 0;
+            const count = (colleagueInput && parseInt(colleagueInput.value)) || 0;
             const container = document.getElementById("colleagueFields");
-            container.innerHTML = ""; // Clear existing
+            if (container) {
+                container.innerHTML = ""; // Clear existing
 
-            if (count > 0) {
-                container.style.display = "block";
-                for (let i = 0; i < count; i++) {
-                    const html = `
-                        <div class="row mb-2">
-                            <div class="col-md-6 mb-2">
-                                <label>Colleague #${i + 1} Name</label>
-                                <input type="text" name="colleague_name_${i}" class="form-control" placeholder="Name" required>
+                if (count > 0) {
+                    container.style.display = "block";
+                    for (let i = 0; i < count; i++) {
+                        const html = `
+                            <div class="row mb-2">
+                                <div class="col-md-6 mb-2">
+                                    <label>Colleague #${i + 1} Name</label>
+                                    <input type="text" name="colleague_name_${i}" class="form-control" placeholder="Name" required>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label>Colleague #${i + 1} Mobile</label>
+                                    <input type="tel" name="colleague_mobile_${i}" class="form-control" placeholder="Mobile" required>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Colleague #${i + 1} Mobile</label>
-                                <input type="tel" name="colleague_mobile_${i}" class="form-control" placeholder="Mobile" required>
-                            </div>
-                        </div>
-                     `;
-                    container.insertAdjacentHTML('beforeend', html);
+                         `;
+                        container.insertAdjacentHTML('beforeend', html);
+                    }
+                } else {
+                    container.style.display = "none";
                 }
-            } else {
-                container.style.display = "none";
             }
             calculateTotal();
         }
@@ -924,7 +923,7 @@
             }
 
             // 3. Multi-Colleague Calculation
-            let count = parseInt(colleagueInput.value) || 0;
+            let count = (colleagueInput && parseInt(colleagueInput.value)) || 0;
             let totalAddonAmount = count * baseAmount;
 
             let finalTotal = baseAmount + totalAddonAmount;
