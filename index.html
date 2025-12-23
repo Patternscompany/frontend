@@ -444,7 +444,7 @@
                                         CO-SPONSOR</h5>
                                     <div class="video-box"
                                         style="border-radius: 10px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.15);">
-                                        <video width="100%" controls>
+                                        <video id="coSponsorVideo" width="100%" controls muted playsinline>
                                             <source src="assets/img/MRVPresentationVideo.mp4" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
@@ -1623,6 +1623,24 @@
         </div>
         <div class="icon-circle"></div>
     </a>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const video = document.getElementById("coSponsorVideo");
+            if (video) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            video.play().catch(error => console.log("Autoplay prevented:", error));
+                        } else {
+                            video.pause();
+                        }
+                    });
+                }, { threshold: 0.5 }); // Adjust threshold as needed (0.5 means 50% visibility)
+
+                observer.observe(video);
+            }
+        });
+    </script>
 </body>
 
 </html>
