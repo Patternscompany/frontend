@@ -778,11 +778,10 @@
                 return alert("Banquet Pass is not available for Students");
             }
 
-            document.getElementById("selectedCategory").innerText = type;
-            document.getElementById("baseAmount").innerText = amount;
-
-            document.getElementById("reg_type").value = type;
-            document.getElementById("finalAmount").value = amount;
+            // document.getElementById("selectedCategory").innerText = type;
+            // document.getElementById("baseAmount").innerText = amount;
+            // document.getElementById("reg_type").value = type;
+            // document.getElementById("finalAmount").value = amount;
 
             document.getElementById("amountSection").style.display = "block";
             document.getElementById("fullForm").style.display = "block";
@@ -853,17 +852,18 @@
             calculateTotal();
         }
 
+
         function calculateTotal() {
             // 1. Get Base Amount from selected Reg Type
             let selectedType = document.querySelector('input[name="regType"]:checked');
             let baseAmount = selectedType ? parseInt(selectedType.dataset.amount) : 0;
-            let typeName = selectedType ? selectedType.value.toLowerCase() : "";
+            let displayType = selectedType ? selectedType.value : "";
+            let typeName = displayType.toLowerCase();
 
             // ADD BANQUET ADDON IF CHECKED
-            if (document.getElementById("banquetAddon").checked) {
+            if (document.getElementById("banquetAddon") && document.getElementById("banquetAddon").checked && !typeName.includes("rc member")) {
                 baseAmount += 2000;
-                // Append name if not already there? 
-                // Don't append to typeName (used for logic), but for display we handled it in updateAmount.
+                displayType += " + Banquet Pass";
             }
 
             // 2. Student vs Doctor Toggles
@@ -881,45 +881,35 @@
 
             if (typeName.includes("student") || typeName.includes("intern")) {
                 // SHOW STUDENT
-                studentSection.style.display = "flex";
-                collegeSelect.required = true;
-                yearSelect.required = true;
-                collegeSelect.disabled = false;
-                yearSelect.disabled = false;
-                // Manual logic handled by event listener, but ensure base state correct if needed
+                if (studentSection) {
+                    studentSection.style.display = "flex";
+                    if (collegeSelect) { collegeSelect.required = true; collegeSelect.disabled = false; }
+                    if (yearSelect) { yearSelect.required = true; yearSelect.disabled = false; }
+                }
 
                 // HIDE DOCTOR
-                doctorSection.style.display = "none";
-                orgSelect.required = false;
-                desigSelect.required = false;
-                dciInput.required = false;
-                orgSelect.disabled = true;
-                desigSelect.disabled = true;
-                dciInput.disabled = true;
-
-                // Reset doctor values
-                orgSelect.value = "";
-                desigSelect.value = "";
-                dciInput.value = "";
+                if (doctorSection) {
+                    doctorSection.style.display = "none";
+                    if (orgSelect) { orgSelect.required = false; orgSelect.disabled = true; orgSelect.value = ""; }
+                    if (desigSelect) { desigSelect.required = false; desigSelect.disabled = true; desigSelect.value = ""; }
+                    if (dciInput) { dciInput.required = false; dciInput.disabled = true; dciInput.value = ""; }
+                }
 
             } else {
                 // HIDE STUDENT
-                studentSection.style.display = "none";
-                collegeSelect.required = false;
-                yearSelect.required = false;
-                collegeSelect.disabled = true;
-                yearSelect.disabled = true;
-                collegeSelect.value = "";
-                yearSelect.value = "";
+                if (studentSection) {
+                    studentSection.style.display = "none";
+                    if (collegeSelect) { collegeSelect.required = false; collegeSelect.disabled = true; collegeSelect.value = ""; }
+                    if (yearSelect) { yearSelect.required = false; yearSelect.disabled = true; yearSelect.value = ""; }
+                }
 
                 // SHOW DOCTOR
-                doctorSection.style.display = "flex";
-                orgSelect.required = true;
-                desigSelect.required = true;
-                dciInput.required = true;
-                orgSelect.disabled = false;
-                desigSelect.disabled = false;
-                dciInput.disabled = false;
+                if (doctorSection) {
+                    doctorSection.style.display = "flex";
+                    if (orgSelect) { orgSelect.required = true; orgSelect.disabled = false; }
+                    if (desigSelect) { desigSelect.required = true; desigSelect.disabled = false; }
+                    if (dciInput) { dciInput.required = false; dciInput.disabled = false; }
+                }
             }
 
             // 3. Multi-Colleague Calculation
@@ -929,7 +919,7 @@
             let finalTotal = baseAmount + totalAddonAmount;
 
             if (selectedType) {
-                document.getElementById("selectedCategory").innerHTML = selectedType.value + (count > 0 ? `<br><small>+ ${count} Colleague(s)</small>` : "");
+                document.getElementById("selectedCategory").innerHTML = displayType + (count > 0 ? `<br><small>+ ${count} Colleague(s)</small>` : "");
             }
 
             if (document.getElementById("baseAmount")) {
@@ -937,6 +927,9 @@
             }
 
             document.getElementById("finalAmount").value = finalTotal;
+            if (document.getElementById("reg_type")) {
+                document.getElementById("reg_type").value = displayType;
+            }
         }
 
         // TOGGLE MANUAL COLLEGE INPUT
