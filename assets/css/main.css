@@ -9647,7 +9647,7 @@ html {
   transition: all 0.5s ease-in-out;
   opacity: 1;
   z-index: 9;
-  top:100%;
+  top: 100%;
   transform: scale(1);
   position: absolute;
   transition: all 0.4s;
@@ -27957,25 +27957,29 @@ html {
     transform: scale(1.5);
   }
 }
+
 /* Cultural Page Styles */
 .highlight-box {
   background: #fff;
   padding: 30px 20px;
   border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
   margin-bottom: 30px;
   transition: all 0.3s ease;
   height: 100%;
 }
+
 .highlight-box:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
 .highlight-box .icon-box {
   font-size: 40px;
   color: #ff6700;
   margin-bottom: 20px;
 }
+
 .highlight-box h4 {
   font-size: 20px;
   font-weight: 700;
@@ -27986,16 +27990,18 @@ html {
   background: #fff;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
   margin-bottom: 30px;
   text-align: center;
   transition: all 0.3s ease;
   border: 1px solid #eee;
 }
+
 .cultural-card:hover {
   border-color: #ff6700;
   transform: translateY(-5px);
 }
+
 .cultural-card h3 {
   font-size: 22px;
   font-weight: 700;
@@ -28009,6 +28015,7 @@ html {
   border-radius: 12px;
   height: 100%;
 }
+
 .info-box-styled h3 {
   font-size: 24px;
   font-weight: 700;
@@ -28017,16 +28024,19 @@ html {
   display: inline-block;
   padding-bottom: 5px;
 }
+
 .info-box-styled ul {
   padding: 0;
   list-style: none;
 }
+
 .info-box-styled ul li {
   margin-bottom: 15px;
   font-size: 16px;
   display: flex;
   align-items: flex-start;
 }
+
 .info-box-styled ul li i {
   color: #ff6700;
   margin-right: 10px;
@@ -28039,30 +28049,34 @@ html {
   border-radius: 12px;
   color: white;
 }
+
 .schedule-box h3 {
   color: white;
   font-size: 28px;
   font-weight: 700;
 }
+
 .schedule-item i {
   font-size: 30px;
   color: #ff6700;
   margin-bottom: 15px;
 }
+
 .schedule-item h5 {
   color: white;
   margin-bottom: 5px;
   font-size: 18px;
 }
+
 .schedule-item p {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .cta-box {
   background: #fff;
   padding: 50px;
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   border-top: 5px solid #ff6700;
 }
 
@@ -28073,17 +28087,67 @@ html {
   border: 1px solid #eee;
   margin-bottom: 30px;
 }
+
 .contact-card-box h3 {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 15px;
   color: #ff6700;
 }
+
 .map-link {
   color: #1a1719;
   font-weight: 600;
   text-decoration: underline;
 }
+
 .map-link:hover {
   color: #ff6700;
+}
+
+/* Hero Slider Animation */
+.hero-slider-area .owl-item {
+  overflow: hidden;
+}
+
+.hero-slider-area .owl-item .item img {
+  transform: scale(1);
+  transition: transform 6s linear;
+}
+
+.hero-slider-area .owl-item.active .item img {
+  transform: scale(1.1);
+}
+
+.animated {
+  animation-duration: 1000ms;
+  animation-fill-mode: both;
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

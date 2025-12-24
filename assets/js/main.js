@@ -489,6 +489,20 @@
     }
   });
 
+  // Hero Slider //
+  $('.hero-slider-area').owlCarousel({
+    loop: true,
+    margin: 0,
+    nav: false,
+    dots: true,
+    items: 1,
+    autoplay: true,
+    smartSpeed: 1000,
+    autoplayTimeout: 5000,
+    animateOut: 'fadeOut',
+    animateIn: 'fadeIn',
+  });
+
   // testimonial //
   $(".hero2-slider-area").slick({
     autoplay: true,
