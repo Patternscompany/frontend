@@ -7,6 +7,8 @@
     <title>Admin Dashboard - TGSDC 2025</title>
     <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/vendor/fontawesome.css">
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -132,9 +134,14 @@
                 <span class="toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></span>
                 <h2>Registrations Dashboard</h2>
             </div>
-            <button class="btn btn-outline-primary" onclick="window.location.reload()">
-                <i class="fa-solid fa-rotate-right"></i> Refresh
-            </button>
+            <div class="d-flex gap-2">
+                <button class="btn btn-success" onclick="exportToExcel()">
+                    <i class="fa-solid fa-file-excel"></i> Export Excel
+                </button>
+                <button class="btn btn-outline-primary" onclick="window.location.reload()">
+                    <i class="fa-solid fa-rotate-right"></i> Refresh
+                </button>
+            </div>
         </div>
 
         <!-- Stats Row -->
@@ -455,6 +462,54 @@
 
         function toggleSidebar() {
             document.querySelector('.sidebar').classList.toggle('open');
+        }
+
+        // Export to Excel Logic
+        function exportToExcel() {
+            if (!allData || allData.length === 0) {
+                alert("No data available to export.");
+                return;
+            }
+
+            // 1. Format Data for Excel
+            const dataToExport = allData.map(item => ({
+                "Date": new Date(item.createdAt).toLocaleDateString() + ' ' + new Date(item.createdAt).toLocaleTimeString(),
+                "Reg ID": item.reg_id,
+                "Title": item.title || "",
+                "Name": item.name,
+                "Gender": item.gender || "",
+                "Email": item.email,
+                "Mobile": item.mobile,
+                "Category": item.reg_type,
+                "Amount": item.amount,
+                "Payment Status": item.payment_status,
+                "Organization": item.organization || "",
+                "Designation": item.designation || "",
+                "DCI Number": item.dci_reg_number || "",
+                "College": item.college || "",
+                "Year": item.study_year || "",
+                "Address": item.address || "",
+                "State": item.state || "",
+                "City": item.city || "",
+                "Pincode": item.pincode || "",
+                "Payment ID": item.razorpay_payment_id || "",
+                "Order ID": item.razorpay_order_id || "",
+                "Comments": item.comments || ""
+            }));
+
+            // 2. Create Workbook and Worksheet
+            const workbook = XLSX.utils.book_new();
+            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+
+            // 3. Append Worksheet to Workbook
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Registrations");
+
+            // 4. Generate File Name with Date
+            const dateStr = new Date().toISOString().slice(0, 10);
+            const fileName = `TGSDC_Registrations_${dateStr}.xlsx`;
+
+            // 5. Download
+            XLSX.writeFile(workbook, fileName);
         }
 
         // Init
