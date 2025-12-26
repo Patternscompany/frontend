@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Telangana State Dental Conference</title>
+    <title>Student & RC Registration - TGSDC 2026</title>
 
     <!--=====FAB ICON=======-->
     <link rel="shortcut icon" href="assets/img/logoo.jpg" />
@@ -91,6 +91,24 @@
                                     <li><a href="about.html">About Event</a></li>
 
                                     <li><a href="register.html">Registration</a></li>
+                                    <li>
+                                        <a href="#">Downloads <i class="fa-solid fa-angle-down"></i></a>
+                                        <ul class="dropdown-padding">
+                                            <li><a href="assets/doc/10th TELANGANA STATE DENTAL CONFERENCE.pdf"
+                                                    target="_blank">10th TELANGANA STATE DENTAL CONFERENCE</a></li>
+                                            <li><a href="assets/doc/Clinical case competition .pdf"
+                                                    target="_blank">Clinical Case
+                                                    Competition</a></li>
+                                            <li><a href="assets/doc/Paper and poster presentaion poster.pdf"
+                                                    target="_blank">Paper & Poster Presentation Guidelines</a>
+                                            </li>
+                                            <li><a href="assets/doc/Cultural event guidelines.pdf"
+                                                    target="_blank">Cultural Event Guidelines</a></li>
+                                            <li><a href="assets/doc/TRADE LAYOUT.pdf" target="_blank">Trade
+                                                    Layout</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="cultural.html">Cultural</a></li>
                                     <li><a href="contact.html">Contact Us</a></li>
 
                                 </ul>
@@ -145,13 +163,24 @@
         </div>
         <div class="mobile-nav mobile-nav1">
             <ul class="mobile-nav-list nav-list1">
-                <li>
-                    <a href="index.html">Home </a>
-
-                </li>
+                <li><a href="index.html">Home </a></li>
                 <li><a href="about.html">About Event</a></li>
                 <li><a href="register.html">Registration</a></li>
-
+                <li>
+                    <a href="#">Downloads</a>
+                    <ul class="sub-menu">
+                        <li><a href="assets/doc/10th TELANGANA STATE DENTAL CONFERENCE.pdf" target="_blank">10th
+                                TELANGANA STATE DENTAL CONFERENCE</a></li>
+                        <li><a href="assets/doc/Clinical case competition .pdf" target="_blank">Clinical Case
+                                Competition</a></li>
+                        <li><a href="assets/doc/Paper and poster presentaion poster.pdf" target="_blank">Paper & Poster
+                                Presentation Guidelines</a></li>
+                        <li><a href="assets/doc/Cultural event guidelines.pdf" target="_blank">Cultural Event
+                                Guidelines</a></li>
+                        <li><a href="assets/doc/TRADE LAYOUT.pdf" target="_blank">Trade Layout</a></li>
+                    </ul>
+                </li>
+                <li><a href="cultural.html">Cultural</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
             </ul>
             <div class="allmobilesection">
@@ -243,19 +272,18 @@
                                 <div class="d-flex flex-column gap-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="regType" id="rt1"
-                                            value="RC MEMBER(DELEGATE WITH BANQUET)" data-amount="3500">
-                                        <label class="form-check-label fw-bold" for="rt1">RC MEMBER (DELEGATE WITH
-                                            BANQUET)</label>
+                                            value="RC MEMBER" data-amount="3500">
+                                        <label class="form-check-label fw-bold" for="rt1">RC MEMBER</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="regType" id="rt2"
-                                            value="RC MEMBER(WITH LUNCH)" data-amount="1500">
-                                        <label class="form-check-label fw-bold" for="rt2">RC MEMBER (WITH LUNCH)</label>
+                                            value="DELEGATES (WITH LUNCH)" data-amount="1500">
+                                        <label class="form-check-label fw-bold" for="rt2">DELEGATES (WITH LUNCH)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="regType" id="rt3"
-                                            value="RC MEMBER" data-amount="1000">
-                                        <label class="form-check-label fw-bold" for="rt3">RC MEMBER</label>
+                                            value="DELEGATES" data-amount="1000">
+                                        <label class="form-check-label fw-bold" for="rt3">DELEGATES</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="regType" id="rt4"
@@ -267,11 +295,12 @@
                                             value="STUDENT" data-amount="500">
                                         <label class="form-check-label fw-bold" for="rt5">STUDENT</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="regType" id="rt6"
-                                            value="BANQUET PASS" data-amount="2000">
-                                        <label class="form-check-label fw-bold" for="rt6">BANQUET PASS</label>
-                                    </div>
+                                </div>
+                                <div class="form-check mt-3" id="banquetAddonSection" style="display:none;">
+                                    <input class="form-check-input" type="checkbox" id="banquetAddon" value="2000">
+                                    <label class="form-check-label fw-bold" for="banquetAddon">
+                                        Add Banquet Pass (+₹2,000)
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -283,11 +312,14 @@
                     <div class="col-md-8 text-center">
                         <div class="alert alert-info">
                             <h5>Already Registered? Buy Banquet Pass</h5>
-                            <p class="small">If you are a registered Doctor/RC Member, enter your ID to buy a Banquet
+                            <p class="small">If you are a registered Doctor/RC Member, enter your Phone Number to buy a
+                                Banquet
                                 Pass.</p>
                             <div class="input-group mb-3" style="max-width: 400px; margin: 0 auto;">
-                                <input type="text" id="checkRegId" class="form-control"
-                                    placeholder="Enter Registration ID (e.g. REG123456)">
+                                <input type="text" id="checkMobile" name="checkMobile" class="form-control"
+                                    pattern="[0-9]{10}" maxlength="10"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                                    title="Please enter exactly 10 digits">
                                 <button class="btn btn-primary" type="button" id="btnCheckStatus">Check</button>
                             </div>
                             <small id="statusMsg" class="text-danger"></small>
@@ -367,13 +399,142 @@
                 <div class="col-md-4">
                     <label class="form-label">Email <span class="text-danger">*</span></label>
                     <input type="email" name="email" class="form-control" required>
+                    <div class="form-text">Please enter a valid email address for registration confirmation and
+                        communication</div>
                 </div>
 
                 <!-- MOBILE -->
                 <div class="col-md-4">
                     <label class="form-label">Mobile <span class="text-danger">*</span></label>
-                    <input type="text" name="mobile" class="form-control" required>
+                    <input type="text" name="mobile" class="form-control" pattern="[0-9]{10}" maxlength="10"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                        title="Please enter exactly 10 digits" required>
                 </div>
+
+
+                <!-- STUDENT DETAILS SECTION -->
+                <div id="studentDetails" class="row g-3" style="display:none;">
+                    <div class="col-md-6">
+                        <label class="form-label">College Name <span class="text-danger">*</span></label>
+                        <select name="college" id="collegeSelect" class="form-select no-nice-select">
+                            <option value="">Select College</option>
+                            <option value="Army College of Dental Sciences, Secunderabad">Army College of Dental
+                                Sciences, Secunderabad</option>
+                            <option value="Government Dental College and Hospital, Hyderabad">Government Dental College
+                                and Hospital, Hyderabad</option>
+                            <option value="Kamineni Institute of Dental Sciences, Narketpally">Kamineni Institute of
+                                Dental Sciences, Narketpally</option>
+                            <option value="Mamata Dental College, Khammam">Mamata Dental College, Khammam</option>
+                            <option value="Mamata Dental College, Bachupally">Mamata Dental College, Bachupally</option>
+                            <option value="Malla Reddy Institute of Dental Sciences, Hyderabad">Malla Reddy Institute of
+                                Dental Sciences, Hyderabad</option>
+                            <option value="Meghna Institute of Dental Sciences, Nizamabad">Meghna Institute of Dental
+                                Sciences, Nizamabad</option>
+                            <option value="Malla Reddy Dental College for Women, Hyderabad">Malla Reddy Dental College
+                                for Women, Hyderabad</option>
+                            <option value="Sri Balaji Dental College and Hospital, Hyderabad">Sri Balaji Dental College
+                                and Hospital, Hyderabad</option>
+                            <option value="Panineeya Institute of Dental Sciences and Research Centre, Hyderabad">
+                                Panineeya Institute of Dental Sciences and Research Centre, Hyderabad</option>
+                            <option value="SVS Institute of Dental Sciences, Mahabubnagar">SVS Institute of Dental
+                                Sciences, Mahabubnagar</option>
+                            <option value="Sri Sai College of Dental Surgery, Vikarabad">Sri Sai College of Dental
+                                Surgery, Vikarabad</option>
+                            <option value="MNR Dental College and Hospital, Sangareddy">MNR Dental College and Hospital,
+                                Sangareddy</option>
+                            <option value="Tirumala Institute of Dental Sciences and Research Centre, Nizamabad">
+                                Tirumala Institute of Dental Sciences and Research Centre, Nizamabad</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="text" name="college_manual" id="collegeManual" class="form-control mt-2"
+                            placeholder="Enter College Name" style="display:none;">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Year of Study <span class="text-danger">*</span></label>
+                        <select name="study_year" id="yearSelect" class="form-select no-nice-select">
+                            <option value="">Select Year</option>
+                            <option value="1st BDS">1st BDS</option>
+                            <option value="2nd BDS">2nd BDS</option>
+                            <option value="3rd BDS">3rd BDS</option>
+                            <option value="4th BDS">4th BDS</option>
+                            <option value="INTERN">Intern</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- DOCTOR DETAILS SECTION (Replaced old Org/Desig fields) -->
+                <div id="doctorDetails" class="row g-3">
+                    <!-- ORGANIZATION / STATE DENTAL COUNCIL -->
+                    <div class="col-md-6">
+                        <label class="form-label">State Dental Council / Organization <span
+                                class="text-danger">*</span></label>
+                        <select name="organization" id="orgSelect" class="form-select no-nice-select">
+                            <option value="">Select State Dental Council</option>
+                            <option value="Andhra Pradesh State Dental Council">Andhra Pradesh State Dental Council
+                            </option>
+                            <option value="Arunachal Pradesh State Dental Council">Arunachal Pradesh State Dental
+                                Council</option>
+                            <option value="Assam State Dental Council">Assam State Dental Council</option>
+                            <option value="Bihar State Dental Council">Bihar State Dental Council</option>
+                            <option value="Chhattisgarh State Dental Council">Chhattisgarh State Dental Council</option>
+                            <option value="Dental Council of Chandigarh">Dental Council of Chandigarh</option>
+                            <option value="Delhi State Dental Council">Delhi State Dental Council</option>
+                            <option value="Goa State Dental Council">Goa State Dental Council</option>
+                            <option value="Gujarat State Dental Council">Gujarat State Dental Council</option>
+                            <option value="Haryana State Dental Council">Haryana State Dental Council</option>
+                            <option value="Himachal Pradesh State Dental Council">Himachal Pradesh State Dental Council
+                            </option>
+                            <option value="Jammu & Kashmir State Dental Council">Jammu & Kashmir State Dental Council
+                            </option>
+                            <option value="Jharkhand State Dental Council">Jharkhand State Dental Council</option>
+                            <option value="Karnataka State Dental Council">Karnataka State Dental Council</option>
+                            <option value="Kerala State Dental Council">Kerala State Dental Council</option>
+                            <option value="Madhya Pradesh State Dental Council">Madhya Pradesh State Dental Council
+                            </option>
+                            <option value="Maharashtra State Dental Council">Maharashtra State Dental Council</option>
+                            <option value="Manipur State Dental Council">Manipur State Dental Council</option>
+                            <option value="Meghalaya State Dental Council">Meghalaya State Dental Council</option>
+                            <option value="Mizoram State Dental Council">Mizoram State Dental Council</option>
+                            <option value="Nagaland State Dental Council">Nagaland State Dental Council</option>
+                            <option value="Orissa State Dental Council">Orissa State Dental Council</option>
+                            <option value="Pondicherry Dental Council">Pondicherry Dental Council</option>
+                            <option value="Punjab State Dental Council">Punjab State Dental Council</option>
+                            <option value="Rajasthan State Dental Council">Rajasthan State Dental Council</option>
+                            <option value="Sikkim State Dental Council">Sikkim State Dental Council</option>
+                            <option value="Tamil Nadu State Dental Council">Tamil Nadu State Dental Council</option>
+                            <option value="Telangana State Dental Council">Telangana State Dental Council</option>
+                            <option value="Tripura State Dental Council">Tripura State Dental Council</option>
+                            <option value="Uttar Pradesh State Dental Council">Uttar Pradesh State Dental Council
+                            </option>
+                            <option value="Uttarakhand State Dental Council">Uttarakhand State Dental Council</option>
+                            <option value="West Bengal Dental Council">West Bengal Dental Council</option>
+                            <option value="Other">Other / Organization</option>
+                        </select>
+                        <input type="text" name="organization_manual" id="orgManual" class="form-control mt-2"
+                            placeholder="Enter Organization Name" style="display:none;">
+                    </div>
+
+                    <!-- DESIGNATION -->
+                    <div class="col-md-6">
+                        <label class="form-label">Designation <span class="text-danger">*</span></label>
+                        <select name="designation" class="form-select no-nice-select" required>
+                            <option value="">Select Designation</option>
+                            <option value="Practitioner">Practitioner</option>
+                            <option value="Academician">Academician</option>
+                            <option value="Student">Student</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- DCI REG NUMBER -->
+                    <div class="col-md-6">
+                        <label class="form-label">State Dental Council Registration Number <span
+                                class="text-muted small">(Optional)</span></label>
+                        <input type="text" name="dci_reg_number" class="form-control" placeholder="Enter DCI Reg No.">
+                        <small class="text-muted">If you want credit points you can enter DCI Number</small>
+                    </div>
+                </div>
+
 
                 <!-- ADDRESS -->
                 <div class="col-12">
@@ -464,7 +625,7 @@
 
 
                 <!-- IDA MEMBER -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="idaMemberSection">
                     <label class="form-label d-block">IDA Member <span class="text-danger">*</span></label>
                     <div class="d-flex gap-3 mt-2">
                         <div class="form-check">
@@ -482,135 +643,9 @@
 
 
 
-                <div class="col-12">
-                    <hr class="my-4">
-                </div>
 
-                <!-- STUDENT DETAILS SECTION -->
-                <div id="studentDetails" class="row g-3" style="display:none;">
-                    <div class="col-12">
-                        <hr class="my-4">
-                        <h4 class="mb-3">Student Details</h4>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">College Name <span class="text-danger">*</span></label>
-                        <select name="college" id="collegeSelect" class="form-select no-nice-select">
-                            <option value="">Select College</option>
-                            <option value="Army College of Dental Sciences, Secunderabad">Army College of Dental
-                                Sciences, Secunderabad</option>
-                            <option value="Government Dental College and Hospital, Hyderabad">Government Dental College
-                                and Hospital, Hyderabad</option>
-                            <option value="Kamineni Institute of Dental Sciences, Narketpally">Kamineni Institute of
-                                Dental Sciences, Narketpally</option>
-                            <option value="Mamata Dental College, Khammam">Mamata Dental College, Khammam</option>
-                            <option value="Mamata Dental College, Bachupally">Mamata Dental College, Bachupally</option>
-                            <option value="Malla Reddy Institute of Dental Sciences, Hyderabad">Malla Reddy Institute of
-                                Dental Sciences, Hyderabad</option>
-                            <option value="Meghna Institute of Dental Sciences, Nizamabad">Meghna Institute of Dental
-                                Sciences, Nizamabad</option>
-                            <option value="Malla Reddy Dental College for Women, Hyderabad">Malla Reddy Dental College
-                                for Women, Hyderabad</option>
-                            <option value="Sri Balaji Dental College and Hospital, Hyderabad">Sri Balaji Dental College
-                                and Hospital, Hyderabad</option>
-                            <option value="Panineeya Institute of Dental Sciences and Research Centre, Hyderabad">
-                                Panineeya Institute of Dental Sciences and Research Centre, Hyderabad</option>
-                            <option value="SVS Institute of Dental Sciences, Mahabubnagar">SVS Institute of Dental
-                                Sciences, Mahabubnagar</option>
-                            <option value="Sri Sai College of Dental Surgery, Vikarabad">Sri Sai College of Dental
-                                Surgery, Vikarabad</option>
-                            <option value="MNR Dental College and Hospital, Sangareddy">MNR Dental College and Hospital,
-                                Sangareddy</option>
-                            <option value="Tirumala Institute of Dental Sciences and Research Centre, Nizamabad">
-                                Tirumala Institute of Dental Sciences and Research Centre, Nizamabad</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <input type="text" name="college_manual" id="collegeManual" class="form-control mt-2"
-                            placeholder="Enter College Name" style="display:none;">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Year of Study <span class="text-danger">*</span></label>
-                        <select name="study_year" id="yearSelect" class="form-select no-nice-select">
-                            <option value="">Select Year</option>
-                            <option value="1st BDS">1st BDS</option>
-                            <option value="2nd BDS">2nd BDS</option>
-                            <option value="3rd BDS">3rd BDS</option>
-                            <option value="4th BDS">4th BDS</option>
-                        </select>
-                    </div>
-                </div>
 
-                <!-- DOCTOR DETAILS SECTION (Replaced old Org/Desig fields) -->
-                <div id="doctorDetails" class="row g-3">
-                    <!-- ORGANIZATION / STATE DENTAL COUNCIL -->
-                    <div class="col-md-6">
-                        <label class="form-label">State Dental Council / Organization <span
-                                class="text-danger">*</span></label>
-                        <select name="organization" id="orgSelect" class="form-select no-nice-select">
-                            <option value="">Select State Dental Council</option>
-                            <option value="Andhra Pradesh State Dental Council">Andhra Pradesh State Dental Council
-                            </option>
-                            <option value="Arunachal Pradesh State Dental Council">Arunachal Pradesh State Dental
-                                Council</option>
-                            <option value="Assam State Dental Council">Assam State Dental Council</option>
-                            <option value="Bihar State Dental Council">Bihar State Dental Council</option>
-                            <option value="Chhattisgarh State Dental Council">Chhattisgarh State Dental Council</option>
-                            <option value="Dental Council of Chandigarh">Dental Council of Chandigarh</option>
-                            <option value="Delhi State Dental Council">Delhi State Dental Council</option>
-                            <option value="Goa State Dental Council">Goa State Dental Council</option>
-                            <option value="Gujarat State Dental Council">Gujarat State Dental Council</option>
-                            <option value="Haryana State Dental Council">Haryana State Dental Council</option>
-                            <option value="Himachal Pradesh State Dental Council">Himachal Pradesh State Dental Council
-                            </option>
-                            <option value="Jammu & Kashmir State Dental Council">Jammu & Kashmir State Dental Council
-                            </option>
-                            <option value="Jharkhand State Dental Council">Jharkhand State Dental Council</option>
-                            <option value="Karnataka State Dental Council">Karnataka State Dental Council</option>
-                            <option value="Kerala State Dental Council">Kerala State Dental Council</option>
-                            <option value="Madhya Pradesh State Dental Council">Madhya Pradesh State Dental Council
-                            </option>
-                            <option value="Maharashtra State Dental Council">Maharashtra State Dental Council</option>
-                            <option value="Manipur State Dental Council">Manipur State Dental Council</option>
-                            <option value="Meghalaya State Dental Council">Meghalaya State Dental Council</option>
-                            <option value="Mizoram State Dental Council">Mizoram State Dental Council</option>
-                            <option value="Nagaland State Dental Council">Nagaland State Dental Council</option>
-                            <option value="Orissa State Dental Council">Orissa State Dental Council</option>
-                            <option value="Pondicherry Dental Council">Pondicherry Dental Council</option>
-                            <option value="Punjab State Dental Council">Punjab State Dental Council</option>
-                            <option value="Rajasthan State Dental Council">Rajasthan State Dental Council</option>
-                            <option value="Sikkim State Dental Council">Sikkim State Dental Council</option>
-                            <option value="Tamil Nadu State Dental Council">Tamil Nadu State Dental Council</option>
-                            <option value="Telangana State Dental Council">Telangana State Dental Council</option>
-                            <option value="Tripura State Dental Council">Tripura State Dental Council</option>
-                            <option value="Uttar Pradesh State Dental Council">Uttar Pradesh State Dental Council
-                            </option>
-                            <option value="Uttarakhand State Dental Council">Uttarakhand State Dental Council</option>
-                            <option value="West Bengal Dental Council">West Bengal Dental Council</option>
-                            <option value="Other">Other / Organization</option>
-                        </select>
-                        <input type="text" name="organization_manual" id="orgManual" class="form-control mt-2"
-                            placeholder="Enter Organization Name" style="display:none;">
-                    </div>
 
-                    <!-- DESIGNATION -->
-                    <div class="col-md-6">
-                        <label class="form-label">Designation <span class="text-danger">*</span></label>
-                        <select name="designation" class="form-select no-nice-select" required>
-                            <option value="">Select Designation</option>
-                            <option value="Practitioner">Practitioner</option>
-                            <option value="Academician">Academician</option>
-                            <option value="Student">Student</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <!-- DCI REG NUMBER -->
-                    <div class="col-md-6">
-                        <label class="form-label">DCI Registration Number <span
-                                class="text-muted small">(Optional)</span></label>
-                        <input type="text" name="dci_reg_number" class="form-control" placeholder="Enter DCI Reg No.">
-                        <small class="text-muted">If you want credit points you can enter DCI Number</small>
-                    </div>
-                </div>
 
 
 
@@ -636,45 +671,112 @@
 
     </div>
 
+    <script>
+        const API_BASE_URL = "http://localhost:5000";
+    </script>
 
     <script>
-        // VISUAL LOGIC FOR CARDS
-        const regCards = document.querySelectorAll('.reg-card input');
-        regCards.forEach(radio => {
-            radio.addEventListener('change', function () {
-                document.querySelectorAll('.reg-card').forEach(c => c.classList.remove('selected'));
-                if (this.checked) {
-                    this.closest('.reg-card').classList.add('selected');
+        // 1. DYNAMIC AMOUNT & CHECKBOX LOGIC
+        const regRadios = document.getElementsByName('regType');
+        const banquetAddon = document.getElementById('banquetAddon');
+        const banquetSection = document.getElementById('banquetAddonSection');
+        const displayAmount = document.getElementById('baseAmount'); // Note: amountSection id is baseAmount
+
+        // Define Sections for Logic
+        const studentSection = document.getElementById('studentDetails');
+        const doctorSection = document.getElementById('doctorDetails');
+        const collegeSelect = document.getElementById('collegeSelect');
+        const yearSelect = document.getElementById('yearSelect');
+        const orgSelect = document.getElementById('orgSelect');
+        const hiddenAmount = document.getElementById('finalAmount');
+        const hiddenType = document.getElementById('reg_type');
+
+        function updateAmount() {
+            let selected;
+            for (const radio of regRadios) {
+                if (radio.checked) {
+                    selected = radio;
+                    break;
                 }
-            });
+            }
+
+            if (selected) {
+                let baseAmt = parseInt(selected.getAttribute('data-amount'));
+                let currentType = selected.value;
+
+                // SPECIAL LOGIC: 
+                // If "RC MEMBER" -> Hide Addon (It's included in base price, don't add 2000)
+                if (currentType.includes("RC MEMBER")) {
+                    banquetSection.style.display = "none";
+                    banquetAddon.checked = false; // Fix: Uncheck so we don't add extra 2000
+                } else {
+                    banquetSection.style.display = "block";
+                    // Check if addon selected
+                    if (banquetAddon.checked) {
+                        baseAmt += 2000;
+                        currentType += " + Banquet Pass";
+                    }
+                }
+
+                // Update UI (if Amount Section is visible)
+                if (document.getElementById("amountSection").style.display !== "none") {
+                    document.getElementById("baseAmount").innerText = baseAmt.toLocaleString();
+                    document.getElementById("selectedCategory").innerText = currentType;
+                }
+
+                // Update Hidden Steps (even if not visible yet, good for Continue click)
+                hiddenAmount.value = baseAmt;
+                hiddenType.value = currentType;
+
+                // Also Update Button Data Attributes? No, `showFormBtn` reads radio directly.
+                // We need to patch `showFormBtn` to read `hiddenAmount` instead of radio dataset?
+                // Let's rely on `calculateTotal` which runs later.
+            }
+        }
+
+        // Attach listeners
+        regRadios.forEach(r => r.addEventListener('change', () => {
+            // Reset addon check if switching FROM a non-banquet TO a non-banquet types? 
+            if (r.value.includes("DELEGATE WITH BANQUET")) {
+                banquetAddon.checked = false; // Reset
+            }
+            updateAmount();
+            // Also trigger global calc if form open
+            if (typeof calculateTotal === 'function') calculateTotal();
+        }));
+
+        banquetAddon.addEventListener('change', () => {
+            updateAmount();
+            if (typeof calculateTotal === 'function') calculateTotal();
         });
 
-        // BANQUET UPGRADE CHECK LOGIC
+
+        // 2. BANQUET UPGRADE CHECK LOGIC (EMAIL BASED)
         document.getElementById("btnCheckStatus").onclick = async () => {
-            const regId = document.getElementById("checkRegId").value.trim();
+            const mobile = document.getElementById("checkMobile").value.trim();
             const msg = document.getElementById("statusMsg");
 
-            if (!regId) {
-                msg.innerText = "Please enter a Registration ID";
+            if (!mobile) {
+                msg.innerText = "Please enter your registered Mobile Number";
                 return;
             }
             msg.innerText = "Verifying...";
 
             try {
-                // 1. Check Status & Get Details
-                const res = await fetch("http://localhost:5000/api/check-status", {
+                // Find user by Mobile
+                const res = await fetch(`${API_BASE_URL}/api/check-status`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ reg_id: regId })
+                    body: JSON.stringify({ mobile: mobile })
                 });
                 const data = await res.json();
 
                 if (data.success) {
-                    msg.innerText = "ID Verified! Creating Upgrade Order...";
+                    msg.innerText = "Number Verified! Creating Upgrade Order...";
 
-                    // 2. Create New Registration (Banquet Pass)
-                    // We clone their details
+                    // Create New Registration (Banquet Pass) with EXISTING ID
                     const upgradePayload = {
+                        existing_reg_id: data.existing_reg_id, // Reuse ID!!
                         reg_type: "Banquet Pass (Add-on)",
                         amount: 2000,
                         title: data.title,
@@ -688,9 +790,8 @@
                         state: data.state,
                         city: data.city,
                         pincode: data.pincode,
-                        food_pref: "Non-Veg", // Default or ask? Assuming Banquet implies food.
-                        ida_member: "No", // Irrelevant for banquet pass
-                        comments: "Upgrade from " + regId
+                        food_pref: "Non-Veg",
+                        comments: "Upgrade for Add-on(Banquet Pass) " + data.existing_reg_id
                     };
 
                     const regRes = await fetch("http://localhost:5000/api/register", {
@@ -701,9 +802,8 @@
                     const regJson = await regRes.json();
 
                     if (regJson.success) {
-                        // 3. Proceed to Checkout with NEW ID
                         const checkoutData = {
-                            reg_id: regJson.reg_id, // NEW ID
+                            reg_id: regJson.reg_id,
                             amount: 2000,
                             name: data.name,
                             email: data.email,
@@ -717,7 +817,7 @@
                     }
 
                 } else {
-                    msg.innerText = data.error || "Invalid ID or not eligible.";
+                    msg.innerText = data.error || "Invalid Email or not eligible.";
                 }
 
             } catch (err) {
@@ -725,6 +825,17 @@
                 msg.innerText = "Error connecting to server.";
             }
         };
+
+        // VISUAL LOGIC FOR CARDS
+        const regCards = document.querySelectorAll('.reg-card input');
+        regCards.forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.querySelectorAll('.reg-card').forEach(c => c.classList.remove('selected'));
+                if (this.checked) {
+                    this.closest('.reg-card').classList.add('selected');
+                }
+            });
+        });
 
         // STEP LOGIC
         document.getElementById("showFormBtn").onclick = () => {
@@ -737,16 +848,15 @@
             let amount = selected.dataset.amount;
 
             // Student Banqeut Check
-            if (type.toLowerCase().includes("student") && type.toLowerCase().includes("banquet")) {
-                // This case is unlikely via UI but good safety
-                return alert("Banquet Pass is not available for Students");
-            }
+            // if (type.toLowerCase().includes("student") && type.toLowerCase().includes("banquet")) {
+            //     // This case is unlikely via UI but good safety
+            //     return alert("Banquet Pass is not available for Students");
+            // }
 
-            document.getElementById("selectedCategory").innerText = type;
-            document.getElementById("baseAmount").innerText = amount;
-
-            document.getElementById("reg_type").value = type;
-            document.getElementById("finalAmount").value = amount;
+            // document.getElementById("selectedCategory").innerText = type;
+            // document.getElementById("baseAmount").innerText = amount;
+            // document.getElementById("reg_type").value = type;
+            // document.getElementById("finalAmount").value = amount;
 
             document.getElementById("amountSection").style.display = "block";
             document.getElementById("fullForm").style.display = "block";
@@ -788,103 +898,132 @@
         // const idaMemberRadios removed from logic loop
 
         function updateColleagueFields() {
-            const count = parseInt(colleagueInput.value) || 0;
+            const count = (colleagueInput && parseInt(colleagueInput.value)) || 0;
             const container = document.getElementById("colleagueFields");
-            container.innerHTML = ""; // Clear existing
+            if (container) {
+                container.innerHTML = ""; // Clear existing
 
-            if (count > 0) {
-                container.style.display = "block";
-                for (let i = 0; i < count; i++) {
-                    const html = `
-                        <div class="row mb-2">
-                            <div class="col-md-6 mb-2">
-                                <label>Colleague #${i + 1} Name</label>
-                                <input type="text" name="colleague_name_${i}" class="form-control" placeholder="Name" required>
+                if (count > 0) {
+                    container.style.display = "block";
+                    for (let i = 0; i < count; i++) {
+                        const html = `
+                            <div class="row mb-2">
+                                <div class="col-md-6 mb-2">
+                                    <label>Colleague #${i + 1} Name</label>
+                                    <input type="text" name="colleague_name_${i}" class="form-control" placeholder="Name" required>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label>Colleague #${i + 1} Mobile</label>
+                                    <input type="tel" name="colleague_mobile_${i}" class="form-control" placeholder="Mobile" required>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Colleague #${i + 1} Mobile</label>
-                                <input type="tel" name="colleague_mobile_${i}" class="form-control" placeholder="Mobile" required>
-                            </div>
-                        </div>
-                     `;
-                    container.insertAdjacentHTML('beforeend', html);
+                         `;
+                        container.insertAdjacentHTML('beforeend', html);
+                    }
+                } else {
+                    container.style.display = "none";
                 }
-            } else {
-                container.style.display = "none";
             }
             calculateTotal();
         }
+
 
         function calculateTotal() {
             // 1. Get Base Amount from selected Reg Type
             let selectedType = document.querySelector('input[name="regType"]:checked');
             let baseAmount = selectedType ? parseInt(selectedType.dataset.amount) : 0;
-            let typeName = selectedType ? selectedType.value.toLowerCase() : "";
+            let displayType = selectedType ? selectedType.value : "";
+            let typeName = displayType.toLowerCase();
+
+            // ADD BANQUET ADDON IF CHECKED
+            if (document.getElementById("banquetAddon") && document.getElementById("banquetAddon").checked && !typeName.includes("rc member")) {
+                baseAmount += 2000;
+                displayType += " + Banquet Pass";
+            }
 
             // 2. Student vs Doctor Toggles
             const studentSection = document.getElementById("studentDetails");
             const collegeSelect = document.getElementById("collegeSelect");
             const yearSelect = document.getElementById("yearSelect");
-            const collegeManual = document.getElementById("collegeManual"); // Manual Input
+            // const collegeManual = document.getElementById("collegeManual"); // Manual Input
 
             const doctorSection = document.getElementById("doctorDetails");
             const orgSelect = document.getElementById("orgSelect");
-            const orgManual = document.getElementById("orgManual"); // Manual Input
+            // const orgManual = document.getElementById("orgManual"); // Manual Input
             const desigSelect = document.querySelector('select[name="designation"]');
             const dciInput = document.querySelector('input[name="dci_reg_number"]');
+
+            const idaMemberSection = document.getElementById("idaMemberSection");
+            const idaRadios = document.getElementsByName("ida_member");
 
 
             if (typeName.includes("student") || typeName.includes("intern")) {
                 // SHOW STUDENT
-                studentSection.style.display = "flex";
-                collegeSelect.required = true;
-                yearSelect.required = true;
-                collegeSelect.disabled = false;
-                yearSelect.disabled = false;
-                // Manual logic handled by event listener, but ensure base state correct if needed
+                if (studentSection) {
+                    studentSection.style.display = "flex";
+                    if (collegeSelect) { collegeSelect.required = true; collegeSelect.disabled = false; }
+                    if (yearSelect) { yearSelect.required = true; yearSelect.disabled = false; }
+                }
 
                 // HIDE DOCTOR
-                doctorSection.style.display = "none";
-                orgSelect.required = false;
-                desigSelect.required = false;
-                dciInput.required = false;
-                orgSelect.disabled = true;
-                desigSelect.disabled = true;
-                dciInput.disabled = true;
+                if (doctorSection) {
+                    doctorSection.style.display = "none";
+                    if (orgSelect) { orgSelect.required = false; orgSelect.disabled = true; orgSelect.value = ""; }
+                    if (desigSelect) { desigSelect.required = false; desigSelect.disabled = true; desigSelect.value = ""; }
+                    if (dciInput) { dciInput.required = false; dciInput.disabled = true; dciInput.value = ""; }
+                }
 
-                // Reset doctor values
-                orgSelect.value = "";
-                desigSelect.value = "";
-                dciInput.value = "";
+                // HIDE IDA MEMBER & BANQUET
+                if (idaMemberSection) {
+                    idaMemberSection.style.display = "none";
+                    idaRadios.forEach(r => { r.checked = false; r.required = false; });
+                }
+                const banquetSection = document.getElementById('banquetAddonSection');
+                if (banquetSection) {
+                    banquetSection.style.display = "none";
+                    if (document.getElementById("banquetAddon")) document.getElementById("banquetAddon").checked = false;
+                }
 
             } else {
                 // HIDE STUDENT
-                studentSection.style.display = "none";
-                collegeSelect.required = false;
-                yearSelect.required = false;
-                collegeSelect.disabled = true;
-                yearSelect.disabled = true;
-                collegeSelect.value = "";
-                yearSelect.value = "";
+                if (studentSection) {
+                    studentSection.style.display = "none";
+                    if (collegeSelect) { collegeSelect.required = false; collegeSelect.disabled = true; collegeSelect.value = ""; }
+                    if (yearSelect) { yearSelect.required = false; yearSelect.disabled = true; yearSelect.value = ""; }
+                }
 
                 // SHOW DOCTOR
-                doctorSection.style.display = "flex";
-                orgSelect.required = true;
-                desigSelect.required = true;
-                dciInput.required = true;
-                orgSelect.disabled = false;
-                desigSelect.disabled = false;
-                dciInput.disabled = false;
+                if (doctorSection) {
+                    doctorSection.style.display = "flex";
+                    if (orgSelect) { orgSelect.required = true; orgSelect.disabled = false; }
+                    if (desigSelect) { desigSelect.required = true; desigSelect.disabled = false; }
+                    if (dciInput) { dciInput.required = false; dciInput.disabled = false; }
+                }
+
+                // SHOW IDA MEMBER
+                if (idaMemberSection) {
+                    idaMemberSection.style.display = "block";
+                    idaRadios.forEach(r => r.required = false);
+                }
+
+                // SHOW BANQUET (Unless RC Member handling overrides it above/below)
+                // Note: The logic at start of function (lines 940) handles RC Member hiding banquet.
+                // We just need to make sure we don't force show it if RC Member.
+                // The earlier logic sets display based on RC Member.
+                // We only need to force hide if Student.
+                if (!typeName.includes("rc member") && document.getElementById('banquetAddonSection')) {
+                    document.getElementById('banquetAddonSection').style.display = "block";
+                }
             }
 
             // 3. Multi-Colleague Calculation
-            let count = parseInt(colleagueInput.value) || 0;
+            let count = (colleagueInput && parseInt(colleagueInput.value)) || 0;
             let totalAddonAmount = count * baseAmount;
 
             let finalTotal = baseAmount + totalAddonAmount;
 
             if (selectedType) {
-                document.getElementById("selectedCategory").innerHTML = selectedType.value + (count > 0 ? `<br><small>+ ${count} Colleague(s)</small>` : "");
+                document.getElementById("selectedCategory").innerHTML = displayType + (count > 0 ? `<br><small>+ ${count} Colleague(s)</small>` : "");
             }
 
             if (document.getElementById("baseAmount")) {
@@ -892,6 +1031,9 @@
             }
 
             document.getElementById("finalAmount").value = finalTotal;
+            if (document.getElementById("reg_type")) {
+                document.getElementById("reg_type").value = displayType;
+            }
         }
 
         // TOGGLE MANUAL COLLEGE INPUT
@@ -938,6 +1080,15 @@
             const form = document.getElementById("fullForm");
 
             // CHECK VALIDATION FIRST
+            // 1. VALIDATE TITLE
+            const titleSelected = document.querySelector('input[name="title"]:checked');
+            if (!titleSelected) {
+                alert("Please Select Title");
+                showFormBtn.disabled = false;
+                showFormBtn.innerText = "Proceed to Payment";
+                return;
+            }
+
             if (!form.checkValidity()) {
                 form.reportValidity(); // Shows the browser validation UI
                 return; // Stop execution
@@ -1231,6 +1382,23 @@
     <script src="assets/js/vendor/slick-slider.js"></script>
     <script src="assets/js/vendor/circle-progress.js"></script>
     <script src="assets/js/main.js"></script>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSepFrnb-792RCGSJvsbcOseLlQnsJqODrRhSVBWVxbir3IUxw/viewform?usp=publish-editor"
+        target="_blank" class="confirmation-help-btn">
+        <div class="text-ring">
+            <svg viewBox="0 0 100 100" width="100" height="100">
+                <defs>
+                    <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+                </defs>
+                <text font-size="10">
+                    <textPath xlink:href="#circle">
+                        Issue with email
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+        <div class="icon-circle"></div>
+    </a>
 </body>
 
 </html>
+```
