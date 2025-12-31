@@ -190,23 +190,40 @@
                     </div>
                     <div class="d-flex justify-content-between border-bottom py-2">
                         <span>Delegates (with Lunch)</span>
-                        <span class="fw-bold" id="paidDelegateswithlunch">0</span>
+                        <span class="fw-bold" id="paidDelegatesWithLunch">0</span>
                     </div>
                     <div class="d-flex justify-content-between border-bottom py-2">
                         <span>Delegates</span>
                         <span class="fw-bold" id="paidDelegates">0</span>
                     </div>
                     <div class="d-flex justify-content-between border-bottom py-2">
-                        <span>Student (with Lunch)</span>
+                        <span>Student (incl. Interns/PG) - With Lunch</span>
                         <span class="fw-bold" id="paidStudentWithLunch">0</span>
                     </div>
                     <div class="d-flex justify-content-between border-bottom py-2">
-                        <span>Student</span>
+                        <span>Student (incl. Interns/PG)</span>
                         <span class="fw-bold" id="paidStudent">0</span>
                     </div>
-                    <div class="d-flex justify-content-between py-2">
-                        <span>Banquet Pass (DL or D)</span>
-                        <span class="fw-bold" id="paidBanquet">0</span>
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>Banquet Only (Add-on)</span>
+                        <span class="fw-bold" id="paidBanquetStandalone">0</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-2 fw-bold text-primary">
+                        <span>Pending Payments</span>
+                        <span id="pendingCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="stat-card bg-light">
+                    <h6 class="text-muted mb-3">Total Counts (Bundled)</h6>
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>Total Banquet Passes Sold</span>
+                        <span class="fw-bold text-success" id="totalBanquet">0</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-2 text-muted small">
+                        <span>(Includes bundled passes with Delegates)</span>
                     </div>
                 </div>
             </div>
@@ -219,7 +236,7 @@
                 <select id="filterCategory" class="form-select" onchange="applyFilters()">
                     <option value="">All Categories</option>
                     <option value="RC MEMBER">RC Members</option>
-                    <option value="DELEGATES">Delegates</option>
+                    <option value="DELEGATE">Delegates</option>
                     <option value="STUDENT">Students</option>
                     <option value="BANQUET">Banquet Pass Only</option>
                 </select>
@@ -297,7 +314,8 @@
             }
         };
 
-        const API_URL = "http://localhost:5000/api/registrations";
+        const API_BASE_URL = "http://localhost:5000";
+        const API_URL = `${API_BASE_URL}/api/registrations`;
         async function fetchData() {
             try {
                 const res = await fetch(API_URL);
@@ -326,11 +344,16 @@
                 const itemAmt = (item.amount || "").toString();
                 const itemName = (item.name || "").toLowerCase();
                 const itemID = (item.reg_id || "").toLowerCase();
+                const itemMobile = (item.mobile || "").toLowerCase();
                 const itemEmail = (item.email || "").toLowerCase();
 
-                let catMatch = !cat || itemCat.includes(cat);
+                // Robust singular check for Delegates
+                let searchCat = cat;
+                if (cat === "delegates") searchCat = "delegate";
+
+                let catMatch = !cat || itemCat.includes(searchCat);
                 let amtMatch = !amt || itemAmt === amt;
-                let searchMatch = !search || itemName.includes(search) || itemID.includes(search) || itemEmail.includes(search);
+                let searchMatch = !search || itemName.includes(search) || itemID.includes(search) || itemMobile.includes(search) || itemEmail.includes(search);
 
                 return catMatch && amtMatch && searchMatch;
             });
@@ -366,9 +389,14 @@
                         <td>₹${item.amount}</td>
                         <td><span class="${statusClass}">${item.payment_status || 'Pending'}</span></td>
                         <td>
-                            <button class="btn btn-sm btn-info text-white" onclick="viewDetails('${uniqueId}')">
-                                <i class="fa-solid fa-eye"></i> View
-                            </button>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-sm btn-info text-white" onclick="viewDetails('${uniqueId}')">
+                                    <i class="fa-solid fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uniqueId}')">
+                                    <i class="fa-solid fa-envelope"></i> Resend
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -441,6 +469,29 @@
             new bootstrap.Modal(document.getElementById('detailsModal')).show();
         }
 
+        async function resendEmail(uid) {
+            if (!confirm("Are you sure you want to resend registration emails (Card + confirmation) to this user and admin?")) {
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/resend-email`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: uid })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert("Emails resent successfully!");
+                } else {
+                    alert("Error: " + (data.error || "Unknown error"));
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Failed to connect to server.");
+            }
+        }
+
         function updateStats(data) {
             document.getElementById("totalReg").innerText = data.length;
 
@@ -451,45 +502,68 @@
             document.getElementById("totalRevenue").innerText = revenue.toLocaleString('en-IN');
 
             // --- CATEGORY STATS ---
-            // --- CATEGORY STATS ---
+            const typeBreakdown = {};
+            data.forEach(d => {
+                if (d.payment_status === "Paid") {
+                    typeBreakdown[d.reg_type] = (typeBreakdown[d.reg_type] || 0) + 1;
+                }
+            });
+            console.log("--- PAID REGISTRATION TYPE BREAKDOWN ---");
+            console.table(typeBreakdown);
+
             let rcCount = 0;
-            let delegateLunchCount = 0;
-            let delegateCount = 0;
-            let studentLunchCount = 0;
-            let studentCount = 0;
-            let banquetCount = 0;
+            let dlCount = 0; // Delegate with Lunch
+            let dCount = 0;  // Delegate
+            let slCount = 0; // Student with Lunch
+            let sCount = 0;  // Student/Intern
+            let banStandaloneCount = 0; // "Banquet Pass (Add-on)"
+            let banquetTotalCount = 0; // Independent count (Bundled + Standalone)
+            let pendingCount = 0;
+            let otherCount = 0;
 
-            paidData.forEach(item => {
+            data.forEach(item => {
                 const type = (item.reg_type || "").toLowerCase();
+                const isPaid = item.payment_status === "Paid";
 
-                if (type.includes("rc member")) {
-                    rcCount++;
-                } else if (type.includes("delegates") && type.includes("lunch")) {
-                    // "DELEGATES (WITH LUNCH)"
-                    delegateLunchCount++;
-                } else if (type.includes("delegates")) {
-                    // "DELEGATES"
-                    delegateCount++;
-                } else if (type.includes("student") && type.includes("lunch")) {
-                    // "STUDENT (WITH LUNCH)"
-                    studentLunchCount++;
-                } else if (type.includes("student")) {
-                    // "STUDENT"
-                    studentCount++;
+                if (!isPaid) {
+                    pendingCount++;
+                    return;
                 }
 
-                // INDEPENDENT CHECK: Count Banquet Pass regardless of main category (Bundled or Add-on)
+                // CATEGORY COUNTING (Total Paid = sum of these)
+                if (type.includes("rc member")) {
+                    rcCount++;
+                } else if (type.includes("delegate") && type.includes("lunch")) {
+                    dlCount++;
+                } else if (type.includes("delegate")) {
+                    dCount++;
+                } else if ((type.includes("student") || type.includes("intern") || type.includes("pg")) && type.includes("lunch")) {
+                    slCount++;
+                } else if (type.includes("student") || type.includes("intern") || type.includes("pg")) {
+                    sCount++;
+                } else if (type.includes("banquet") && type.includes("add-on")) {
+                    banStandaloneCount++;
+                } else {
+                    otherCount++;
+                }
+
+                // Independent Banquet Check
                 if (type.includes("banquet")) {
-                    banquetCount++;
+                    banquetTotalCount++;
                 }
             });
 
+            // Update UI
             if (document.getElementById("paidRCMember")) document.getElementById("paidRCMember").innerText = rcCount;
-            if (document.getElementById("paidDelegates")) document.getElementById("paidDelegates").innerText = delegateCount;
-            if (document.getElementById("paidDelegateswithlunch")) document.getElementById("paidDelegateswithlunch").innerText = delegateLunchCount;
-            if (document.getElementById("paidStudent")) document.getElementById("paidStudent").innerText = studentCount;
-            if (document.getElementById("paidStudentWithLunch")) document.getElementById("paidStudentWithLunch").innerText = studentLunchCount;
-            if (document.getElementById("paidBanquet")) document.getElementById("paidBanquet").innerText = banquetCount;
+            if (document.getElementById("paidDelegatesWithLunch")) document.getElementById("paidDelegatesWithLunch").innerText = dlCount;
+            if (document.getElementById("paidDelegates")) document.getElementById("paidDelegates").innerText = dCount;
+            if (document.getElementById("paidStudentWithLunch")) document.getElementById("paidStudentWithLunch").innerText = slCount;
+            if (document.getElementById("paidStudent")) document.getElementById("paidStudent").innerText = sCount;
+            if (document.getElementById("paidBanquetStandalone")) document.getElementById("paidBanquetStandalone").innerText = banStandaloneCount;
+            if (document.getElementById("paidOtherCount")) document.getElementById("paidOtherCount").innerText = otherCount;
+
+            if (document.getElementById("totalBanquet")) document.getElementById("totalBanquet").innerText = banquetTotalCount;
+            if (document.getElementById("pendingCount")) document.getElementById("pendingCount").innerText = pendingCount;
         }
 
         // Helper to parse amount safely
