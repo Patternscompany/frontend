@@ -161,14 +161,20 @@
         <div class="row mb-4">
             <div class="col-md-3">
                 <div class="stat-card border-start border-4 border-primary">
-                    <h6 class="text-muted">Total Registrations</h6>
+                    <h6 class="text-muted">Total Entries <small>(Paid + Pending)</small></h6>
                     <h2 id="totalReg">0</h2>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card border-start border-4 border-success">
-                    <h6 class="text-muted">Total Paid</h6>
+                    <h6 class="text-muted">Total Paid Records <small>(Transactions)</small></h6>
                     <h2 id="totalPaid">0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card border-start border-4 border-warning">
+                    <h6 class="text-muted">Unique Paid Registrations</h6>
+                    <h2 id="uniquePaid">0</h2>
                 </div>
             </div>
             <div class="col-md-3">
@@ -498,6 +504,10 @@
             const paidData = data.filter(d => d.payment_status === "Paid");
             document.getElementById("totalPaid").innerText = paidData.length;
 
+            // Unique Paid Delegates (by mobile number)
+            const uniqueMobiles = new Set(paidData.map(d => d.mobile));
+            document.getElementById("uniquePaid").innerText = uniqueMobiles.size;
+
             const revenue = paidData.reduce((acc, curr) => reqAmount(curr.amount) + acc, 0);
             document.getElementById("totalRevenue").innerText = revenue.toLocaleString('en-IN');
 
@@ -530,7 +540,7 @@
                     return;
                 }
 
-                // CATEGORY COUNTING (Total Paid = sum of these)
+                // CATEGORY COUNTING (Total Paid Records = sum of these)
                 if (type.includes("rc member")) {
                     rcCount++;
                 } else if (type.includes("delegate") && type.includes("lunch")) {
