@@ -375,9 +375,22 @@
                 return;
             }
 
+            // Calculate mobile frequency to identify potential upgrades
+            const mobileMap = {};
+            data.forEach(item => {
+                const mob = item.mobile;
+                if (mob) {
+                    mobileMap[mob] = (mobileMap[mob] || 0) + 1;
+                }
+            });
+
             data.forEach(item => {
                 const date = new Date(item.createdAt).toLocaleDateString() + ' ' + new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 const statusClass = item.payment_status === "Paid" ? "status-paid" : "status-pending";
+
+                // Identify if this record is part of a multiple-entry set (Upgrade)
+                const isMulti = mobileMap[item.mobile] > 1;
+                const upgradeBadge = isMulti ? `<span class="badge bg-warning text-dark ms-2" style="font-size: 0.65rem; vertical-align: middle;">Multi-Record</span>` : "";
 
                 // Use _id for unique identification in View button
                 const uniqueId = item._id;
@@ -387,7 +400,7 @@
                         <td>${date}</td>
                         <td><small>${item.reg_id}</small></td>
                         <td class="fw-bold">
-                        ${item.title}. ${item.name}<br>
+                        ${item.title}. ${item.name}${upgradeBadge}<br>
                             <small class="text-muted">${item.mobile}</small>
                         </td>
                         <td><small>${item.reg_type}</small></td>
