@@ -238,6 +238,15 @@
 
         <!-- FILTERS -->
         <div class="row mb-3">
+            <div class="col-md-2 mb-2">
+                <select id="filterDate" class="form-select" onchange="applyFilters()">
+                    <option value="">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="7">Last 7 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
+                </select>
+            </div>
             <div class="col-md-3 mb-2">
                 <select id="filterCategory" class="form-select" onchange="applyFilters()">
                     <option value="">All Categories</option>
@@ -247,7 +256,7 @@
                     <option value="BANQUET">Banquet Pass Only</option>
                 </select>
             </div>
-            <div class="col-md-3 mb-2">
+            <div class="col-md-2 mb-2">
                 <select id="filterAmount" class="form-select" onchange="applyFilters()">
                     <option value="">All Amounts</option>
                     <option value="3500">₹ 3,500</option>
@@ -344,6 +353,10 @@
             const cat = document.getElementById("filterCategory").value.toLowerCase();
             const amt = document.getElementById("filterAmount").value;
             const search = document.getElementById("searchName").value.toLowerCase();
+            const dateFilter = document.getElementById("filterDate").value;
+
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
             const filtered = allData.filter(item => {
                 const itemCat = (item.reg_type || "").toLowerCase();
@@ -352,6 +365,7 @@
                 const itemID = (item.reg_id || "").toLowerCase();
                 const itemMobile = (item.mobile || "").toLowerCase();
                 const itemEmail = (item.email || "").toLowerCase();
+                const createdAt = new Date(item.createdAt).getTime();
 
                 // Robust singular check for Delegates
                 let searchCat = cat;
@@ -361,9 +375,23 @@
                 let amtMatch = !amt || itemAmt === amt;
                 let searchMatch = !search || itemName.includes(search) || itemID.includes(search) || itemMobile.includes(search) || itemEmail.includes(search);
 
-                return catMatch && amtMatch && searchMatch;
+                // Date filtering
+                let dateMatch = true;
+                if (dateFilter === "today") {
+                    dateMatch = createdAt >= todayStart;
+                } else if (dateFilter === "7") {
+                    dateMatch = createdAt >= (now.getTime() - (7 * 24 * 60 * 60 * 1000));
+                } else if (dateFilter === "30") {
+                    dateMatch = createdAt >= (now.getTime() - (30 * 24 * 60 * 60 * 1000));
+                } else if (dateFilter === "90") {
+                    dateMatch = createdAt >= (now.getTime() - (90 * 24 * 60 * 60 * 1000));
+                }
+
+                return catMatch && amtMatch && searchMatch && dateMatch;
             });
+
             renderTable(filtered);
+            updateStats(filtered); // Update stats live as we filter
         }
 
         function renderTable(data) {
