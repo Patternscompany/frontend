@@ -865,10 +865,10 @@ Location:
 .heading6 h2 {
   color: var(--ztc-text-text-11);
   font-family: var(--ztc-family-font1);
-  font-size: var(--ztc-font-size-font-s44);
+  font-size: var(--ztc-font-size-font-s30);
   font-style: normal;
   font-weight: var(--ztc-weight-bold);
-  line-height: 52px;
+  line-height: 40px;
   letter-spacing: -0.88px;
 }
 
@@ -11167,7 +11167,7 @@ html {
   background: var(--ztc-text-text-1);
   top: 201.3%;
   transform: scale(1, 0);
-  width: 300px;
+  width: 400px;
   z-index: 0;
   transition: all 0.4s;
   border-radius: 5px;
@@ -27740,7 +27740,7 @@ html {
   border-bottom: none;
 }
 
-.dropdown-padding li a {
+.main-menu ul li ul.dropdown-padding li a {
   padding: 10px 20px !important;
   display: block;
   color: #333;
