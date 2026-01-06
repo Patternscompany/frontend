@@ -155,6 +155,43 @@
                     flex-direction: column;
                 }
             }
+
+            /* Pagination Styles */
+            .pagination-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                background: #fff;
+                border-top: 1px solid #dee2e6;
+                border-radius: 0 0 10px 10px;
+            }
+
+            .pagination-controls {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .page-info {
+                color: #6c757d;
+                font-size: 0.9rem;
+            }
+
+            .pagination-container .btn {
+                color: #000000 !important;
+                border: 1px solid #ffc107;
+            }
+
+            .pagination-container .btn:hover {
+                color: #fff !important;
+                background: #000000;
+            }
+
+            .pagination-container .btn:focus {
+                background: #000000;
+                color: #fff !important;
+            }
         </style>
 
         <!-- Stats Row -->
@@ -291,8 +328,8 @@
         </div>
 
         <!-- Data Table -->
-        <div class="table-container">
-            <table class="table table-hover align-middle">
+        <div class="table-container mb-0" style="border-radius: 10px 10px 0 0; border-bottom: none;">
+            <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
                         <th>Date</th>
@@ -307,10 +344,24 @@
                 </thead>
                 <tbody id="tableBody">
                     <tr>
-                        <td colspan="7" class="text-center py-4">Loading data...</td>
+                        <td colspan="8" class="text-center py-4">Loading data...</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <!-- Pagination Controls -->
+        <div class="pagination-container shadow-sm mb-4">
+            <div class="page-info" id="pageInfo">
+                Showing 0-0 of 0 registrations
+            </div>
+            <div class="pagination-controls">
+                <button class="btn btn-outline-primary btn-sm" id="prevBtn" onclick="prevPage()" disabled>
+                    <i class="fa-solid fa-chevron-left"></i> Previous
+                </button>
+                <button class="btn btn-outline-primary btn-sm" id="nextBtn" onclick="nextPage()" disabled>
+                    Next <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -318,6 +369,9 @@
     <script>
         // ... (existing auth/logout/fetch code remains same or is omitted here if not changed) ...
         let allData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        const itemsPerPage = 25;
 
         if (!localStorage.getItem("admin_logged_in")) {
             window.location.href = "admin-login.html";
@@ -337,7 +391,8 @@
                 const json = await res.json();
                 if (json.success) {
                     allData = json.data;
-                    renderTable(allData);
+                    filteredData = [...allData];
+                    renderTable();
                     updateStats(allData);
                 } else {
                     alert("Error fetching data: " + json.error);
@@ -358,7 +413,7 @@
             const now = new Date();
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
-            const filtered = allData.filter(item => {
+            filteredData = allData.filter(item => {
                 const itemCat = (item.reg_type || "").toLowerCase();
                 const itemAmt = (item.amount || "").toString();
                 const itemName = (item.name || "").toLowerCase();
@@ -390,29 +445,36 @@
                 return catMatch && amtMatch && searchMatch && dateMatch;
             });
 
-            renderTable(filtered);
-            updateStats(filtered); // Update stats live as we filter
+            currentPage = 1; // Reset to page 1 on filter
+            renderTable();
+            updateStats(filteredData); // Update stats live as we filter
         }
 
-        function renderTable(data) {
+        function renderTable() {
             const tbody = document.getElementById("tableBody");
             tbody.innerHTML = "";
 
-            if (data.length === 0) {
-                tbody.innerHTML = "<tr><td colspan='7' class='text-center'>No registrations found.</td></tr>";
+            if (filteredData.length === 0) {
+                tbody.innerHTML = "<tr><td colspan='8' class='text-center'>No registrations found.</td></tr>";
+                updatePagination(0);
                 return;
             }
 
+            // Pagination Slicing
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+            const pageData = filteredData.slice(startIndex, endIndex);
+
             // Calculate mobile frequency to identify potential upgrades
             const mobileMap = {};
-            data.forEach(item => {
+            pageData.forEach(item => {
                 const mob = item.mobile;
                 if (mob) {
                     mobileMap[mob] = (mobileMap[mob] || 0) + 1;
                 }
             });
 
-            data.forEach(item => {
+            pageData.forEach(item => {
                 const date = new Date(item.createdAt).toLocaleDateString() + ' ' + new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 const statusClass = item.payment_status === "Paid" ? "status-paid" : "status-pending";
 
@@ -449,6 +511,42 @@
                 `;
                 tbody.innerHTML += row;
             });
+
+            updatePagination(startIndex, endIndex);
+        }
+
+        function updatePagination(start, end) {
+            const total = filteredData.length;
+            const pageInfo = document.getElementById("pageInfo");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+
+            if (total === 0) {
+                pageInfo.innerText = "No registrations found";
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                return;
+            }
+
+            pageInfo.innerText = `Showing ${start + 1}-${end} of ${total} registrations`;
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = end >= total;
+        }
+
+        function nextPage() {
+            if (currentPage * itemsPerPage < filteredData.length) {
+                currentPage++;
+                renderTable();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+                window.scrollTo(0, 0);
+            }
         }
 
         function viewDetails(uid) {
