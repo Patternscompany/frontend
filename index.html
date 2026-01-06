@@ -771,8 +771,6 @@
 
                         </div>
                     </div>
-                    <video src="assets/hero/work-shop.mp4" class="w-100" controls muted loop playsinline>
-                    </video>
                 </div>
 
                 <div class="col-lg-2">
@@ -839,6 +837,12 @@
                                         <span class="accor-btn">Scientific Paper & Poster Presentations</span>
                                     </button>
                                 </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-button collapsed" type="button">
+                                        <span><img src="assets/img/icons/clock1.svg" /> 08:00 PM – 11:00 PM</span>
+                                        <span class="accor-btn">Banquet Dinner & Cultural Night</span>
+                                    </button>
+                                </div>
 
                             </div>
                         </div>
@@ -866,23 +870,25 @@
                                 </button>
                             </div>
 
-                            <div class="accordion-item">
-                                <button class="accordion-button collapsed" type="button">
-                                    <span><img src="assets/img/icons/clock1.svg" /> 06:00 PM – 10:00 PM</span>
-                                    <span class="accor-btn">Banquet Dinner & Cultural Night</span>
-                                </button>
-                            </div>
+
 
                         </div>
 
                     </div>
                 </div>
-                <div class="col-md-8 text-center work-shop" style="margin: 0 auto;">
-                    <div class="memory4-header heading6 space-margin60">
-                        <h2 class="text-anime-style-3">Workshop Highlights / Hands-on Training Preview</h2>
+                <div class="col-md-12 work-shop">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-6">
+                            <div class="memory4-header heading6 space-margin60">
+                                <h2 class="text-anime-style-3">Workshop Highlights / Hands-on Training Preview</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <video src="assets/hero/work-shop.mp4" class="w-100" controls autoplay muted loop
+                                playsinline>
+                            </video>
+                        </div>
                     </div>
-                    <video src="assets/hero/work-shop.mp4" class="w-100" controls muted loop playsinline>
-                    </video>
                 </div>
             </div>
         </div>
@@ -890,10 +896,99 @@
     <!--===== EVENT AREA ENDS =======-->
 
     <style>
-        .work-shop video {
-            height: 300px;
-            object-fit: contain;
+        /* Workshop Section Wrapper */
+        .work-shop {
+            padding: 70px 40px;
+            background: linear-gradient(135deg, #f9f9f9, #ffffff);
+            border-radius: 18px;
+            margin: 60px auto;
+            position: relative;
+            overflow: hidden;
         }
+
+        /* Decorative background glow */
+        .work-shop::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(31, 43, 123, 0.12);
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        /* Inner Row Card Style */
+        .work-shop .row {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .work-shop .row:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Heading Styling */
+        .work-shop h2 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #1f2b7b;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        /* Accent underline */
+        .work-shop h2::after {
+            content: "";
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #1f2b7b);
+            display: block;
+            margin-top: 12px;
+            border-radius: 10px;
+        }
+
+        /* Video Styling */
+        .work-shop video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease;
+        }
+
+        .work-shop video:hover {
+            transform: scale(1.03);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .work-shop {
+                padding: 40px 20px;
+            }
+
+            .work-shop .row {
+                padding: 25px;
+                text-align: center;
+            }
+
+            .work-shop h2 {
+                font-size: 22px;
+            }
+
+            .work-shop video {
+                height: 220px;
+                margin-top: 20px;
+            }
+        }
+
 
         .registration-landing {
             min-height: 100vh;
