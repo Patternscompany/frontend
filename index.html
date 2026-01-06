@@ -877,117 +877,175 @@
                     </div>
                 </div>
                 <div class="col-md-12 work-shop">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-md-6">
-                            <div class="memory4-header heading6 space-margin60">
-                                <h2 class="text-anime-style-3">Workshop Highlights / Hands-on Training Preview</h2>
+
+                    <!-- Section Title -->
+                    <div class="memory4-header heading6 space-margin60 text-center">
+                        <h2 class="text-anime-style-3">Workshop Highlights / Hands-on Training Preview</h2>
+                    </div>
+
+                    <!-- Workshop Card -->
+                    <div class="row align-items-center">
+
+                        <!-- Title -->
+                        <div class="col-md-12 text-center mb-4">
+                            <h2 class="text-anime-style-3">
+                                Immediate Minimally Invasive Solutions for Atrophic Jaws<br>
+                                Using Corticobasal Implants
+                            </h2>
+                        </div>
+
+                        <!-- Mentors -->
+                        <div class="col-md-7">
+                            <div class="workshop-mentors">
+                                <h3 class="section-subtitle">Workshop Mentors</h3>
+
+                                <div class="row justify-content-center mentor-row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="mentor-card">
+                                            <img src="assets/img/dr-rishika-tiwari.png" alt="Dr. Rishika Tiwari">
+                                            <h4>Dr. Rishika Tiwari</h4>
+                                            <!-- <p>Implantologist & Corticobasal Implant Expert</p> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="mentor-card">
+                                            <img src="assets/img/dr-nemaly-chaithanyaa.png"
+                                                alt="Dr. Nemaly Chaithanyaa">
+                                            <h4>Dr. Nemaly Chaithanyaa</h4>
+                                            <!-- <p>Oral Implantologist & Immediate Loading Specialist</p> -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <video src="assets/hero/work-shop.mp4" class="w-100" controls autoplay muted loop
-                                playsinline>
-                            </video>
+
+                        <!-- Video -->
+                        <div class="col-md-5">
+                            <div class="workshop-video">
+                                <video src="assets/hero/work-shop.mp4" controls autoplay muted loop playsinline></video>
+                            </div>
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
     <!--===== EVENT AREA ENDS =======-->
 
     <style>
-        /* Workshop Section Wrapper */
+        /* Workshop Wrapper */
         .work-shop {
             padding: 70px 40px;
             background: linear-gradient(135deg, #f9f9f9, #ffffff);
             border-radius: 18px;
             margin: 60px auto;
             position: relative;
-            overflow: hidden;
         }
 
-        /* Decorative background glow */
-        .work-shop::before {
-            content: "";
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 200px;
-            height: 200px;
-            background: rgba(31, 43, 123, 0.12);
-            border-radius: 50%;
-            filter: blur(60px);
-        }
-
-        /* Inner Row Card Style */
-        .work-shop .row {
+        /* Main Card */
+        .work-shop>.row {
             background: #ffffff;
             border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            padding: 50px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
         }
 
-        .work-shop .row:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.12);
+        /* Mentors Section */
+        .workshop-mentors {
+            text-align: center;
         }
 
-        /* Heading Styling */
-        .work-shop h2 {
-            font-size: 28px;
+        /* Remove nested row styles */
+        .mentor-row {
+            background: unset !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
+        /* Subtitle */
+        .section-subtitle {
+            font-size: 24px;
             font-weight: 700;
-            line-height: 1.4;
             color: #1f2b7b;
-            margin-bottom: 15px;
-            position: relative;
+            margin-bottom: 30px;
         }
 
-        /* Accent underline */
-        .work-shop h2::after {
+        .section-subtitle::after {
             content: "";
             width: 60px;
             height: 4px;
             background: linear-gradient(90deg, #d4af37, #1f2b7b);
             display: block;
-            margin-top: 12px;
+            margin: 12px auto 0;
             border-radius: 10px;
         }
 
-        /* Video Styling */
-        .work-shop video {
+        /* Mentor Card */
+        .mentor-card {
+            background: #fff;
+            padding: 25px 20px;
+            border-radius: 16px;
+            transition: 0.3s ease;
+            text-align: center;
+        }
+
+        .mentor-card:hover {
+            transform: translateY(-6px);
+        }
+
+        /* Mentor Image */
+        .mentor-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #d4af37;
+            margin-bottom: 12px;
+        }
+
+        /* Name */
+        .mentor-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2b7b;
+            margin-bottom: 4px;
+        }
+
+        /* Role */
+        .mentor-card p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Video */
+        .workshop-video video {
             width: 100%;
-            height: 300px;
+            height: 320px;
             object-fit: cover;
             border-radius: 14px;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-            transition: transform 0.4s ease;
         }
 
-        .work-shop video:hover {
-            transform: scale(1.03);
-        }
-
-        /* Responsive Adjustments */
+        /* Responsive */
         @media (max-width: 768px) {
             .work-shop {
                 padding: 40px 20px;
             }
 
-            .work-shop .row {
-                padding: 25px;
+            .work-shop>.row {
+                padding: 30px;
                 text-align: center;
             }
 
-            .work-shop h2 {
-                font-size: 22px;
-            }
-
-            .work-shop video {
+            .workshop-video video {
                 height: 220px;
-                margin-top: 20px;
+                margin-top: 30px;
             }
         }
+
 
 
         .registration-landing {
