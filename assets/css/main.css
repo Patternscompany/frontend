@@ -24070,6 +24070,11 @@ html {
 .event4-section-area .event-images-area {
   position: relative;
   z-index: 1;
+  background: var(--ztc-bg-bg-8);
+}
+
+.event-images-area {
+  background: var(--ztc-bg-bg-8) !important;
 }
 
 .event4-section-area .event-images-area .img1 {
