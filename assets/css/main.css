@@ -24214,9 +24214,9 @@ html {
 }
 
 .event4-section-area .tab-content .tab-pane .accordion-item {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   border-radius: 8px;
-  padding: 28px 24px;
+  padding: 14px 12px;
   border-radius: 8px;
   border: 1px solid rgba(46, 77, 253, 0.08);
   background: #FFF;
@@ -24278,7 +24278,7 @@ html {
 .event4-section-area .tab-content .tab-pane .accordion-item button .accor-btn {
   color: var(--ztc-text-text-11);
   font-family: var(--ztc-family-font1);
-  font-size: var(--ztc-font-size-font-s24);
+  font-size: var(--ztc-font-size-font-s16);
   font-style: normal;
   font-weight: var(--ztc-weight-bold);
   line-height: 24px;
