@@ -255,6 +255,7 @@
                         <span>Pending Payments</span>
                         <span id="pendingCount">0</span>
                     </div>
+
                 </div>
             </div>
 
@@ -270,9 +271,28 @@
                     </div>
                 </div>
             </div>
+
+            <!-- College-wise Paid Stats -->
+            <div class="col-md-12 mt-4">
+                <div class="stat-card">
+                    <h6 class="text-muted mb-3">Paid Registrations by College</h6>
+                    <div id="collegeStatsList">
+                        <p class="text-center text-muted py-3">No college data available.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <style>
+            #collegeStatsList {
+                max-height: 300px;
+                overflow-y: auto;
+            }
 
+            #collegeStatsList::-webkit-scrollbar {
+                display: none;
+            }
+        </style>
         <!-- FILTERS -->
         <div class="row mb-3">
             <div class="col-md-2 mb-2">
@@ -494,7 +514,7 @@
                             <small class="text-muted">${item.mobile}</small>
                         </td>
                         <td><small>${item.reg_type}</small></td>
-                        <td><small>${item.organization || item.college}</small></td>
+                        <td><small>${item.college || item.organization || '-'}</small></td>
                         <td>₹${item.amount}</td>
                         <td><span class="${statusClass}">${item.payment_status || 'Pending'}</span></td>
                         <td>
@@ -502,10 +522,13 @@
                                 <button class="btn btn-sm btn-info text-white" onclick="viewDetails('${uniqueId}')">
                                     <i class="fa-solid fa-eye"></i> View
                                 </button>
-                                <button class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uniqueId}')">
-                                    <i class="fa-solid fa-envelope"></i> Resend
-                                </button>
-                            </div>
+                                 <button class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uniqueId}')">
+                                     <i class="fa-solid fa-envelope"></i> Email
+                                 </button>
+                                 <button class="btn btn-sm btn-success text-white" onclick="resendWhatsApp('${uniqueId}')">
+                                     <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                                 </button>
+                             </div>
                         </td>
                     </tr>
                 `;
@@ -585,7 +608,15 @@
             <p><b>Status:</b> ${item.payment_status}</p>
             <p><b>Payment ID:</b> ${item.razorpay_payment_id || '-'}</p>
             <p><b>Order ID:</b> ${item.razorpay_order_id || '-'}</p>
-            <p><b>Amount:</b> ₹${item.amount}</p>`;
+            <p><b>Amount:</b> ₹${item.amount}</p>
+            <div class="mt-2 text-center">
+                 <button class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uid}')">
+                    <i class="fa-solid fa-envelope"></i> Resend Email
+                </button>
+                <button class="btn btn-sm btn-success text-white ms-2" onclick="resendWhatsApp('${uid}')">
+                    <i class="fa-brands fa-whatsapp"></i> Resend WhatsApp
+                </button>
+            </div>`;
 
             // Other
             const otherInfo = `<h6 class='text-primary mt-3'>Other</h6>
@@ -628,6 +659,29 @@
                 const data = await res.json();
                 if (data.success) {
                     alert("Emails resent successfully!");
+                } else {
+                    alert("Error: " + (data.error || "Unknown error"));
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Failed to connect to server.");
+            }
+        }
+
+        async function resendWhatsApp(uid) {
+            if (!confirm("Are you sure you want to resend ONLY the WhatsApp confirmation message to this user?")) {
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/resend-whatsapp`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: uid })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert("WhatsApp message sent successfully!");
                 } else {
                     alert("Error: " + (data.error || "Unknown error"));
                 }
@@ -713,6 +767,29 @@
 
             if (document.getElementById("totalBanquet")) document.getElementById("totalBanquet").innerText = banquetTotalCount;
             if (document.getElementById("pendingCount")) document.getElementById("pendingCount").innerText = pendingCount;
+
+            // --- COLLEGE-WISE STATS ---
+            const collegeCounts = {};
+            data.forEach(item => {
+                if (item.payment_status === "Paid" && item.college) {
+                    const colName = item.college.trim();
+                    collegeCounts[colName] = (collegeCounts[colName] || 0) + 1;
+                }
+            });
+
+            const sortedColleges = Object.entries(collegeCounts).sort((a, b) => b[1] - a[1]);
+            const collegeStatsList = document.getElementById("collegeStatsList");
+
+            if (sortedColleges.length === 0) {
+                collegeStatsList.innerHTML = '<p class="text-center text-muted py-3">No college data available.</p>';
+            } else {
+                collegeStatsList.innerHTML = sortedColleges.map(([name, count]) => `
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>${name}</span>
+                        <span class="fw-bold">${count}</span>
+                    </div>
+                `).join('');
+            }
         }
 
         // Helper to parse amount safely
