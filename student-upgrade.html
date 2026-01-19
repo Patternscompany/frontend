@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Upgrade - TGSDC 2026</title>
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .upgrade-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .btn-primary-custom {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+            padding: 12px;
+            font-weight: 600;
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #0b5ed7;
+        }
+
+        .status-box {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #0d6efd;
+        }
+
+        .upgrade-option {
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upgrade-option:hover {
+            border-color: #0d6efd;
+            background-color: #f8f9ff;
+        }
+
+        .upgrade-option input:checked+label {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="upgrade-container">
+            <div class="text-center mb-4">
+                <img src="assets/img/trant-logo.png" alt="Logo" style="max-height: 80px;">
+                <h3 class="mt-3">Student Registration Upgrade</h3>
+                <p class="text-muted">Add Lunch to your registration</p>
+            </div>
+
+            <!-- STEP 1: CHECK STATUS -->
+            <div id="step1">
+                <div class="mb-3">
+                    <label class="form-label">Enter Registered Mobile Number</label>
+                    <input type="tel" id="mobileInput" class="form-control" placeholder="10-digit mobile number"
+                        maxlength="10">
+                    <div class="form-text">Students can upgrade to "With Lunch" category.</div>
+                </div>
+                <button type="button" class="btn btn-primary-custom" id="checkStatusBtn" onclick="checkStatus()">Check
+                    My Status</button>
+            </div>
+
+            <!-- STEP 2: CHOOSE UPGRADE -->
+            <div id="step2" style="display: none;">
+                <div class="status-box">
+                    <h5 id="userName">Hello!</h5>
+                    <p class="mb-1"><b>Current Category:</b> <span id="currentCat">-</span></p>
+                    <p class="mb-0"><b>Reg ID:</b> <span id="regId">-</span></p>
+                </div>
+
+                <div id="noUpgrades" style="display: none;" class="alert alert-info">
+                    You have already upgraded to "Student with Lunch" or are not eligible for further online upgrades.
+                </div>
+
+                <div id="upgradeOptionsContainer" style="display: none;">
+                    <h6>Choose your upgrade:</h6>
+                    <form id="upgradeForm">
+                        <div id="optionsList">
+                            <!-- Options injected here -->
+                        </div>
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-success fw-bold p-3 w-100" id="proceedBtn">Proceed to
+                                Upgrade Payment</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button class="btn btn-link btn-sm text-muted" onclick="resetForm()">Search Different
+                        Number</button>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="index.html" class="text-decoration-none small text-muted">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:5000"
+            : "";
+
+        let currentUser = null;
+
+        async function checkStatus() {
+            const mobile = document.getElementById("mobileInput").value;
+            if (!mobile || mobile.length < 10) {
+                alert("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            const btn = document.getElementById("checkStatusBtn");
+            btn.disabled = true;
+            btn.innerText = "Checking...";
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/check-status`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ mobile })
+                });
+
+                const data = await res.json();
+                if (!data.success) {
+                    alert(data.error || "No registration found.");
+                    return;
+                }
+
+                // VALIDATION: Ensure it's a student
+                if (!data.current_reg_type.toUpperCase().includes("STUDENT")) {
+                    alert("This page is for Student upgrades only. Please use the Doctor/Delegate upgrade page.");
+                    location.reload();
+                    return;
+                }
+
+                currentUser = data;
+                showStep2(data);
+
+            } catch (err) {
+                console.error(err);
+                alert("Connection error. Please try again.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Check My Status";
+            }
+        }
+
+        function showStep2(data) {
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "block";
+
+            document.getElementById("userName").innerText = `Hello ${data.title}. ${data.name}!`;
+            document.getElementById("currentCat").innerText = data.current_reg_type;
+            document.getElementById("regId").innerText = data.existing_reg_id;
+
+            const list = document.getElementById("optionsList");
+            list.innerHTML = "";
+
+            if (!data.upgrades || data.upgrades.length === 0) {
+                document.getElementById("noUpgrades").style.display = "block";
+                document.getElementById("upgradeOptionsContainer").style.display = "none";
+            } else {
+                document.getElementById("noUpgrades").style.display = "none";
+                document.getElementById("upgradeOptionsContainer").style.display = "block";
+
+                data.upgrades.forEach((u, index) => {
+                    const div = document.createElement("div");
+                    div.className = "upgrade-option";
+                    div.innerHTML = `
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="upgradeChoice" id="u${index}" value="${index}" required>
+                            <label class="form-check-label w-100 ms-2" for="u${index}">
+                                ${u.label}
+                            </label>
+                        </div>
+                    `;
+                    div.onclick = () => { div.querySelector('input').checked = true; };
+                    list.appendChild(div);
+                });
+            }
+        }
+
+        function resetForm() {
+            document.getElementById("step1").style.display = "block";
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("mobileInput").value = "";
+            currentUser = null;
+        }
+
+        document.getElementById("upgradeForm").onsubmit = async (e) => {
+            e.preventDefault();
+            const selectedIdx = document.querySelector('input[name="upgradeChoice"]:checked').value;
+            const upgrade = currentUser.upgrades[selectedIdx];
+
+            const btn = document.getElementById("proceedBtn");
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            try {
+                const payload = {
+                    existing_reg_id: currentUser.existing_reg_id,
+                    title: currentUser.title,
+                    name: currentUser.name,
+                    email: currentUser.email,
+                    mobile: currentUser.mobile,
+                    reg_type: upgrade.to,
+                    amount: upgrade.amount,
+                    comments: `Upgrade from ${currentUser.current_reg_type} to ${upgrade.to}`
+                };
+
+                const res = await fetch(`${API_BASE_URL}/api/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await res.json();
+                if (!result.success) throw new Error(result.error);
+
+                const checkoutData = {
+                    reg_id: result.reg_id,
+                    amount: upgrade.amount,
+                    name: currentUser.name,
+                    email: currentUser.email,
+                    mobile: currentUser.mobile,
+                    reg_type: upgrade.to,
+                    is_upgrade: true
+                };
+
+                localStorage.setItem("reg_payload", JSON.stringify(checkoutData));
+                window.location.href = "checkout.html";
+
+            } catch (err) {
+                console.error(err);
+                alert("Error: " + err.message);
+                btn.disabled = false;
+                btn.innerText = "Proceed to Upgrade Payment";
+            }
+        };
+    </script>
+
+</body>
+
+</html>

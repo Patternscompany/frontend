@@ -671,31 +671,42 @@ function startCountdown(targetDate, daysId, hoursId, minutesId, secondsId) {
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    document.getElementById(daysId).innerHTML = days + " <span>DAYS</span>";
-    document.getElementById(hoursId).innerHTML = hours + " <span>Hours</span>";
-    document.getElementById(minutesId).innerHTML = minutes + " <span>Minutes</span>";
-    document.getElementById(secondsId).innerHTML = seconds + " <span>Seconds</span>";
+    var daysEl = document.getElementById(daysId);
+    var hoursEl = document.getElementById(hoursId);
+    var minutesEl = document.getElementById(minutesId);
+    var secondsEl = document.getElementById(secondsId);
+
+    // 🚨 Stop if any element is missing
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+      clearInterval(countdownFunction);
+      return;
+    }
+
+    daysEl.innerHTML = days + " <span>DAYS</span>";
+    hoursEl.innerHTML = hours + " <span>Hours</span>";
+    minutesEl.innerHTML = minutes + " <span>Minutes</span>";
+    secondsEl.innerHTML = seconds + " <span>Seconds</span>";
 
     if (distance < 0) {
       clearInterval(countdownFunction);
-      document.getElementById(daysId).innerHTML = "00";
-      document.getElementById(hoursId).innerHTML = "00";
-      document.getElementById(minutesId).innerHTML = "00";
-      document.getElementById(secondsId).innerHTML = "00";
+      daysEl.innerHTML = "00";
+      hoursEl.innerHTML = "00";
+      minutesEl.innerHTML = "00";
+      secondsEl.innerHTML = "00";
       alert("Countdown Ended");
     }
   }, 1000);
 }
 
-// var targetDate = new Date();
-// targetDate.setDate(targetDate.getDate() + 48);
-// targetDate.setHours(targetDate.getHours() + 10);
-// targetDate.setMinutes(targetDate.getMinutes() + 18);
-// targetDate.setSeconds(targetDate.getSeconds() + 44);
+/* ⏳ TARGET DATE */
 var targetDate = new Date(2026, 0, 24, 10, 0, 0);
 
-startCountdown(targetDate, "days", "hours", "minutes", "seconds");
-startCountdown(targetDate, "days1", "hours1", "minutes1", "seconds1");
+/* 🛡️ Run only AFTER page loads */
+document.addEventListener("DOMContentLoaded", function () {
+  startCountdown(targetDate, "days", "hours", "minutes", "seconds");
+  startCountdown(targetDate, "days1", "hours1", "minutes1", "seconds1");
+});
+
 
 
 //========== GSAP AREA ============= //
