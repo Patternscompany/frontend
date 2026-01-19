@@ -788,22 +788,22 @@ if ($('.reveal').length) {
 
 
 //========== PRELOADER BAR AREA ============= //
-document.addEventListener("DOMContentLoaded", function () {
-  setTimeout(function () {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'flex';
-  }, 100);
-  const closeBtn = document.getElementById('close-popup');
-  closeBtn.addEventListener('click', function () {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'none';
-  });
+// document.addEventListener("DOMContentLoaded", function () {
+//   setTimeout(function () {
+//     const popup = document.getElementById('popup');
+//     popup.style.display = 'flex';
+//   }, 100);
+//   const closeBtn = document.getElementById('close-popup');
+//   closeBtn.addEventListener('click', function () {
+//     const popup = document.getElementById('popup');
+//     popup.style.display = 'none';
+//   });
 
-  document.querySelector('.no-thanks').addEventListener('click', function () {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'none';
-  });
-});
+//   document.querySelector('.no-thanks').addEventListener('click', function () {
+//     const popup = document.getElementById('popup');
+//     popup.style.display = 'none';
+//   });
+// });
 
 
 // Tabs //
