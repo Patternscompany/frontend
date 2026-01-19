@@ -644,6 +644,18 @@
   });
 
 
+  //========== NEWS SLIDER ============= //
+  $('.news-slider').owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: false,
+    dots: true,
+    items: 1,
+    autoplay: true,
+    smartSpeed: 1000,
+    autoplayTimeout: 4000,
+  });
+
 })(jQuery);
 
 //========== TIMER ============= //
