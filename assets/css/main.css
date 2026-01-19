@@ -28214,3 +28214,48 @@ html {
     opacity: 1;
   }
 }
+
+.floating-logo {
+  position: fixed;
+  right: -18px;
+  bottom: 200px;
+  z-index: 9999;
+  animation: pulseGlow 2s infinite;
+}
+
+.floating-logo img {
+  width: 150px;
+  /* adjust size */
+  height: auto;
+  border-radius: 50%;
+  cursor: pointer;
+  /* box-shadow: 0 0 15px rgba(255, 165, 0, 0.8); */
+}
+
+@media(max-width:992px) {
+  .floating-logo {
+    right: 0px;
+  }
+
+  .floating-logo img {
+    width: 150px;
+  }
+}
+
+/* Glow Animation */
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    /* box-shadow: 0 0 10px rgba(255, 165, 0, 0.6); */
+  }
+
+  50% {
+    transform: scale(1.08);
+    /* box-shadow: 0 0 25px rgba(255, 165, 0, 1); */
+  }
+
+  100% {
+    transform: scale(1);
+    /* box-shadow: 0 0 10px rgba(255, 165, 0, 0.6); */
+  }
+}

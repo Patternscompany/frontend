@@ -95,6 +95,27 @@
             margin-right: 15px;
         }
 
+        /* Bulk Actions Bar */
+        .bulk-actions-bar {
+            position: fixed;
+            bottom: -100px;
+            left: 250px;
+            right: 0;
+            background: #212529;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2000;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+            transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bulk-actions-bar.show {
+            bottom: 0;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 left: -250px;
@@ -111,6 +132,35 @@
             .toggle-btn {
                 display: inline-block;
             }
+
+            .bulk-actions-bar {
+                left: 0;
+                padding: 10px 15px;
+                flex-direction: column;
+                gap: 10px;
+                height: auto;
+            }
+        }
+
+        /* Checkbox Styling */
+        .form-check-input:checked {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .bulk-progress-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            color: white;
         }
     </style>
 </head>
@@ -135,10 +185,10 @@
                 <h2>Registrations Dashboard</h2>
             </div>
             <div class="d-flex gap-2 flex-wrap">
-                <button class="btn btn-success" onclick="exportToExcel()">
+                <button type="button" class="btn btn-success" onclick="exportToExcel()">
                     <i class="fa-solid fa-file-excel"></i> Export Excel
                 </button>
-                <button class="btn btn-outline-primary" onclick="window.location.reload()">
+                <button type="button" class="btn btn-outline-primary" onclick="window.location.reload()">
                     <i class="fa-solid fa-rotate-right"></i> Refresh
                 </button>
             </div>
@@ -240,11 +290,11 @@
                         <span class="fw-bold" id="paidDelegates">0</span>
                     </div>
                     <div class="d-flex justify-content-between border-bottom py-2">
-                        <span>Student (incl. Interns/PG) - With Lunch</span>
+                        <span>Students With Lunch</span>
                         <span class="fw-bold" id="paidStudentWithLunch">0</span>
                     </div>
                     <div class="d-flex justify-content-between border-bottom py-2">
-                        <span>Student (incl. Interns/PG)</span>
+                        <span>Students</span>
                         <span class="fw-bold" id="paidStudent">0</span>
                     </div>
                     <div class="d-flex justify-content-between border-bottom py-2">
@@ -346,12 +396,27 @@
                 </div>
             </div>
         </div>
-
+        <!-- Pagination Controls -->
+        <div class="pagination-container shadow-sm mb-4">
+            <div class="page-info" id="pageInfo">
+                Showing 0-0 of 0 registrations
+            </div>
+            <div class="pagination-controls">
+                <button type="button" class="btn btn-outline-primary btn-sm" id="prevBtn" onclick="prevPage()" disabled>
+                    <i class="fa-solid fa-chevron-left"></i> Previous
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-sm" id="nextBtn" onclick="nextPage()" disabled>
+                    Next <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
         <!-- Data Table -->
         <div class="table-container mb-0" style="border-radius: 10px 10px 0 0; border-bottom: none;">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
+                        <th style="width: 40px;"><input type="checkbox" class="form-check-input" id="selectAll"
+                                onclick="toggleSelectAll(this.checked)"></th>
                         <th>Date</th>
                         <th>Reg ID</th>
                         <th>Name</th>
@@ -369,20 +434,38 @@
                 </tbody>
             </table>
         </div>
-        <!-- Pagination Controls -->
-        <div class="pagination-container shadow-sm mb-4">
-            <div class="page-info" id="pageInfo">
-                Showing 0-0 of 0 registrations
-            </div>
-            <div class="pagination-controls">
-                <button class="btn btn-outline-primary btn-sm" id="prevBtn" onclick="prevPage()" disabled>
-                    <i class="fa-solid fa-chevron-left"></i> Previous
-                </button>
-                <button class="btn btn-outline-primary btn-sm" id="nextBtn" onclick="nextPage()" disabled>
-                    Next <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
+
+    </div>
+
+    <!-- Bulk Actions Bar -->
+    <div id="bulkActionsBar" class="bulk-actions-bar">
+        <div>
+            <span id="selectedCount" class="fw-bold fs-5" style="color: #ffc107;">0</span> users selected
+            <button class="btn btn-link btn-sm text-info ms-2" onclick="clearSelection()"
+                style="text-decoration: none;">Clear Selection</button>
         </div>
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-warning fw-bold" onclick="sendBulkEmail()">
+                <i class="fa-solid fa-envelope"></i> Bulk Email
+            </button>
+            <button type="button" class="btn btn-success fw-bold" onclick="sendBulkWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> Bulk WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Bulk Progress Overlay -->
+    <div id="bulkProgressOverlay" class="bulk-progress-overlay">
+        <div class="spinner-border text-warning mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+        <h3 id="bulkProgressTitle" class="mb-2">Processing...</h3>
+        <p id="bulkProgressText" class="fs-5 opacity-75">Initialising...</p>
+        <div class="progress w-50 mt-3"
+            style="height: 12px; background-color: rgba(255,255,255,0.1); border-radius: 10px;">
+            <div id="bulkProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                role="progressbar" style="width: 0%; border-radius: 10px;"></div>
+        </div>
+        <button id="closeProgressBtn" type="button" class="btn btn-outline-light mt-4 d-none"
+            onclick="hideProgressOverlay()">Close</button>
     </div>
 
     <script src="assets/js/vendor/bootstrap.min.js"></script>
@@ -391,7 +474,63 @@
         let allData = [];
         let filteredData = [];
         let currentPage = 1;
-        const itemsPerPage = 25;
+        const itemsPerPage = 200;
+        let selectedIds = new Set();
+
+        // Selection Helpers
+        function toggleSelection(id) {
+            if (selectedIds.has(id)) {
+                selectedIds.delete(id);
+            } else {
+                selectedIds.add(id);
+            }
+            updateBulkBar();
+        }
+
+        function toggleSelectAll(checked) {
+            const tableData = getPageData();
+            tableData.forEach(item => {
+                const id = item._id;
+                if (checked) {
+                    selectedIds.add(id);
+                } else {
+                    selectedIds.delete(id);
+                }
+            });
+            renderTable(); // Re-render to update individual checkboxes
+            updateBulkBar();
+        }
+
+        function clearSelection() {
+            selectedIds.clear();
+            document.getElementById("selectAll").checked = false;
+            renderTable();
+            updateBulkBar();
+        }
+
+        function updateBulkBar() {
+            const bar = document.getElementById("bulkActionsBar");
+            const countSpan = document.getElementById("selectedCount");
+            const count = selectedIds.size;
+
+            countSpan.innerText = count;
+            if (count > 0) {
+                bar.classList.add("show");
+            } else {
+                bar.classList.remove("show");
+            }
+
+            // Sync master checkbox status
+            const tableData = getPageData();
+            const allSelectedOnPage = tableData.length > 0 && tableData.every(item => selectedIds.has(item._id));
+            document.getElementById("selectAll").checked = allSelectedOnPage;
+        }
+
+        function getPageData() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+            return filteredData.slice(startIndex, endIndex);
+        }
 
         if (!localStorage.getItem("admin_logged_in")) {
             window.location.href = "admin-login.html";
@@ -475,42 +614,38 @@
             tbody.innerHTML = "";
 
             if (filteredData.length === 0) {
-                tbody.innerHTML = "<tr><td colspan='8' class='text-center'>No registrations found.</td></tr>";
-                updatePagination(0);
+                tbody.innerHTML = "<tr><td colspan='9' class='text-center py-4'>No registrations found.</td></tr>";
+                updatePagination(0, 0);
                 return;
             }
 
-            // Pagination Slicing
+            const pageData = getPageData();
             const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
-            const pageData = filteredData.slice(startIndex, endIndex);
+            const endIndex = startIndex + pageData.length;
 
-            // Calculate mobile frequency to identify potential upgrades
+            // Calculate mobile frequency for multiple-entry set
             const mobileMap = {};
             pageData.forEach(item => {
-                const mob = item.mobile;
-                if (mob) {
-                    mobileMap[mob] = (mobileMap[mob] || 0) + 1;
-                }
+                if (item.mobile) mobileMap[item.mobile] = (mobileMap[item.mobile] || 0) + 1;
             });
 
             pageData.forEach(item => {
                 const date = new Date(item.createdAt).toLocaleDateString() + ' ' + new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 const statusClass = item.payment_status === "Paid" ? "status-paid" : "status-pending";
-
-                // Identify if this record is part of a multiple-entry set (Upgrade)
                 const isMulti = mobileMap[item.mobile] > 1;
                 const upgradeBadge = isMulti ? `<span class="badge bg-warning text-dark ms-2" style="font-size: 0.65rem; vertical-align: middle;">Multi-Record</span>` : "";
-
-                // Use _id for unique identification in View button
                 const uniqueId = item._id;
+                const isSelected = selectedIds.has(uniqueId);
 
                 const row = `
-                    <tr>
+                    <tr class="${isSelected ? 'table-warning' : ''}">
+                        <td>
+                            <input type="checkbox" class="form-check-input" onchange="toggleSelection('${uniqueId}')" ${isSelected ? 'checked' : ''}>
+                        </td>
                         <td>${date}</td>
                         <td><small>${item.reg_id}</small></td>
                         <td class="fw-bold">
-                        ${item.title}. ${item.name}${upgradeBadge}<br>
+                            ${item.title}. ${item.name}${upgradeBadge}<br>
                             <small class="text-muted">${item.mobile}</small>
                         </td>
                         <td><small>${item.reg_type}</small></td>
@@ -519,16 +654,16 @@
                         <td><span class="${statusClass}">${item.payment_status || 'Pending'}</span></td>
                         <td>
                             <div class="d-flex gap-1">
-                                <button class="btn btn-sm btn-info text-white" onclick="viewDetails('${uniqueId}')">
+                                <button type="button" class="btn btn-sm btn-info text-white" onclick="viewDetails('${uniqueId}')">
                                     <i class="fa-solid fa-eye"></i> View
                                 </button>
-                                 <button class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uniqueId}')">
-                                     <i class="fa-solid fa-envelope"></i> Email
-                                 </button>
-                                 <button class="btn btn-sm btn-success text-white" onclick="resendWhatsApp('${uniqueId}')">
-                                     <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                                 </button>
-                             </div>
+                                <button type="button" class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uniqueId}')" title="Resend Email">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success text-white" onclick="resendWhatsApp('${uniqueId}')" title="Resend WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -536,6 +671,79 @@
             });
 
             updatePagination(startIndex, endIndex);
+            updateBulkBar(); // Keep master checkbox in sync
+        }
+
+        // Bulk Actions Logic
+        async function sendBulkEmail() {
+            const ids = Array.from(selectedIds);
+            if (ids.length === 0) return;
+            if (!confirm(`Are you sure you want to resend Emails to ${ids.length} selected users?`)) return;
+            processBulk(ids, "resend-email", "Email Sending");
+        }
+
+        async function sendBulkWhatsApp() {
+            const ids = Array.from(selectedIds);
+            if (ids.length === 0) return;
+            if (!confirm(`Are you sure you want to resend WhatsApp messages to ${ids.length} selected users?`)) return;
+            processBulk(ids, "resend-whatsapp", "WhatsApp Sending");
+        }
+
+        async function processBulk(ids, endpoint, label) {
+            showProgressOverlay(label, ids.length);
+            let successCount = 0;
+            let errorCount = 0;
+
+            for (let i = 0; i < ids.length; i++) {
+                const id = ids[i];
+                updateProgress(i + 1, ids.length, label);
+
+                try {
+                    const res = await fetch(`${API_BASE_URL}/api/${endpoint}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ id })
+                    });
+                    const data = await res.json();
+                    if (data.success) successCount++;
+                    else errorCount++;
+                } catch (err) {
+                    console.error(err);
+                    errorCount++;
+                }
+
+                // Small delay to prevent hammering
+                await new Promise(r => setTimeout(r, 100));
+            }
+
+            finishProgress(successCount, errorCount, label);
+        }
+
+        function showProgressOverlay(label, total) {
+            const overlay = document.getElementById("bulkProgressOverlay");
+            overlay.style.display = "flex";
+            document.getElementById("bulkProgressTitle").innerText = `Processing ${label}`;
+            document.getElementById("bulkProgressText").innerText = `Starting...`;
+            document.getElementById("bulkProgressBar").style.width = "0%";
+            document.getElementById("closeProgressBtn").classList.add("d-none");
+        }
+
+        function updateProgress(current, total, label) {
+            const pct = (current / total) * 100;
+            document.getElementById("bulkProgressText").innerText = `Sending ${current} of ${total}...`;
+            document.getElementById("bulkProgressBar").style.width = pct + "%";
+        }
+
+        function finishProgress(success, error, label) {
+            document.getElementById("bulkProgressTitle").innerText = `${label} Complete`;
+            document.getElementById("bulkProgressText").innerHTML = `<span class="text-success">Success: ${success}</span> | <span class="text-danger">Failed: ${error}</span>`;
+            document.getElementById("bulkProgressBar").style.width = "100%";
+            document.getElementById("closeProgressBtn").classList.remove("d-none");
+        }
+
+        function hideProgressOverlay() {
+            document.getElementById("bulkProgressOverlay").style.display = "none";
+            clearSelection();
         }
 
         function updatePagination(start, end) {
@@ -610,10 +818,10 @@
             <p><b>Order ID:</b> ${item.razorpay_order_id || '-'}</p>
             <p><b>Amount:</b> ₹${item.amount}</p>
             <div class="mt-2 text-center">
-                 <button class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uid}')">
+                 <button type="button" class="btn btn-sm btn-warning text-white" onclick="resendEmail('${uid}')">
                     <i class="fa-solid fa-envelope"></i> Resend Email
                 </button>
-                <button class="btn btn-sm btn-success text-white ms-2" onclick="resendWhatsApp('${uid}')">
+                <button type="button" class="btn btn-sm btn-success text-white ms-2" onclick="resendWhatsApp('${uid}')">
                     <i class="fa-brands fa-whatsapp"></i> Resend WhatsApp
                 </button>
             </div>`;
