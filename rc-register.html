@@ -680,12 +680,27 @@
                 const data = await res.json();
 
                 if (data.success) {
+                    const currentType = data.current_reg_type.toUpperCase();
+
+                    if (currentType.includes("STUDENT")) {
+                        msg.innerText = "Error: Banquet Pass is not available for Student categories.";
+                        return;
+                    }
+
+                    if (currentType.includes("RC MEMBER") || currentType.includes("BANQUET")) {
+                        msg.innerText = "You are already registered with a Banquet Pass (Category: " + data.current_reg_type + ")";
+                        return;
+                    }
+
                     msg.innerText = "Number Verified! Creating Upgrade Order...";
+
+                    // Determine New Reg Type to ensure correct ID Prefix (e.g. D -> DB)
+                    let newType = currentType + " + BANQUET PASS";
 
                     // Create New Registration (Banquet Pass) with EXISTING ID
                     const upgradePayload = {
-                        existing_reg_id: data.existing_reg_id, // Reuse ID!!
-                        reg_type: "Banquet Pass (Add-on)",
+                        existing_reg_id: data.existing_reg_id,
+                        reg_type: newType,
                         amount: 2000,
                         title: data.title,
                         name: data.name,
@@ -699,10 +714,10 @@
                         city: data.city,
                         pincode: data.pincode,
                         food_pref: "Non-Veg",
-                        comments: "Upgrade for Add-on(Banquet Pass) " + data.existing_reg_id
+                        comments: "Banquet Pass Add-on for " + data.existing_reg_id
                     };
 
-                    const regRes = await fetch("http://localhost:5000/api/register", {
+                    const regRes = await fetch(`${API_BASE_URL}/api/register`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(upgradePayload)
@@ -716,12 +731,13 @@
                             name: data.name,
                             email: data.email,
                             mobile: data.mobile,
-                            reg_type: "Banquet Pass (Add-on)"
+                            reg_type: "Banquet Pass (Add-on)",
+                            is_upgrade: true
                         };
                         localStorage.setItem("reg_payload", JSON.stringify(checkoutData));
                         window.location.href = "checkout.html";
                     } else {
-                        msg.innerText = "Error creating order: " + (regJson.error || "Unknown");
+                        msg.innerText = "Error: " + (regJson.error || "Unknown");
                     }
 
                 } else {
