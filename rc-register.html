@@ -862,7 +862,11 @@
             // ADD BANQUET ADDON IF CHECKED
             if (document.getElementById("banquetAddon") && document.getElementById("banquetAddon").checked && !typeName.includes("rc member")) {
                 baseAmount += 2000;
-                displayType += " + Banquet Pass";
+                if (typeName.includes("with lunch")) {
+                    displayType = "RC MEMBER";
+                } else {
+                    displayType += " + Banquet Pass";
+                }
             }
 
             // 2. Student vs Doctor Toggles
