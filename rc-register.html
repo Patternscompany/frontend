@@ -694,8 +694,11 @@
 
                     msg.innerText = "Number Verified! Creating Upgrade Order...";
 
-                    // Determine New Reg Type to ensure correct ID Prefix (e.g. D -> DB)
+                    // Determine New Reg Type to ensure correct ID Prefix (e.g. D -> DB, DL -> RC)
                     let newType = currentType + " + BANQUET PASS";
+                    if (currentType.includes("LUNCH")) {
+                        newType = "RC MEMBER";
+                    }
 
                     // Create New Registration (Banquet Pass) with EXISTING ID
                     const upgradePayload = {
