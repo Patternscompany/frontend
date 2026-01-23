@@ -453,6 +453,9 @@
             <button type="button" class="btn btn-warning fw-bold" onclick="sendBulkEmail()">
                 <i class="fa-solid fa-envelope"></i> Bulk Email
             </button>
+            <button type="button" class="btn btn-info fw-bold text-white" onclick="sendBulkCertificate()">
+                <i class="fa-solid fa-certificate"></i> Bulk Cert
+            </button>
             <button type="button" class="btn btn-success fw-bold" onclick="sendBulkWhatsApp()">
                 <i class="fa-brands fa-whatsapp"></i> Bulk WhatsApp
             </button>
@@ -692,6 +695,13 @@
             if (ids.length === 0) return;
             if (!confirm(`Are you sure you want to resend WhatsApp messages to ${ids.length} selected users?`)) return;
             processBulk(ids, "resend-whatsapp", "WhatsApp Sending");
+        }
+
+        async function sendBulkCertificate() {
+            const ids = Array.from(selectedIds);
+            if (ids.length === 0) return;
+            if (!confirm(`Are you sure you want to GENERATE and SEND Certificates to ${ids.length} selected users? This process is resource intensive.`)) return;
+            processBulk(ids, "send-certificate", "Certificate Sending");
         }
 
         async function processBulk(ids, endpoint, label) {
