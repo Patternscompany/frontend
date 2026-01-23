@@ -301,6 +301,10 @@
                         <span>Banquet Only (Add-on)</span>
                         <span class="fw-bold" id="paidBanquetStandalone">0</span>
                     </div>
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>Traders</span>
+                        <span class="fw-bold" id="paidTraders">0</span>
+                    </div>
                     <div class="d-flex justify-content-between py-2 fw-bold text-primary">
                         <span>Pending Payments</span>
                         <span id="pendingCount">0</span>
@@ -361,6 +365,7 @@
                     <option value="DELEGATE">Delegates</option>
                     <option value="STUDENT">Students</option>
                     <option value="BANQUET">Banquet Pass Only</option>
+                    <option value="TRADER">Traders</option>
                 </select>
             </div>
             <div class="col-md-2 mb-2">
@@ -928,13 +933,14 @@
             let slCount = 0; // Student with Lunch
             let sCount = 0;  // Student/Intern
             let banStandaloneCount = 0; // "Banquet Pass (Add-on)"
+            let traderCount = 0; // Traders
             let banquetTotalCount = 0; // Independent count (Bundled + Standalone)
             let pendingCount = 0;
             let otherCount = 0;
 
             data.forEach(item => {
                 const type = (item.reg_type || "").toLowerCase();
-                const isPaid = item.payment_status === "Paid";
+                const isPaid = item.payment_status === "Paid" || item.payment_status === "Completed"; // Handle "Completed" for Cash
 
                 if (!isPaid) {
                     pendingCount++;
@@ -954,6 +960,8 @@
                     sCount++;
                 } else if (type.includes("banquet") && type.includes("add-on") || type.includes("banquet pass")) {
                     banStandaloneCount++;
+                } else if (type.includes("trader")) {
+                    traderCount++;
                 } else {
                     otherCount++;
                 }
@@ -971,6 +979,7 @@
             if (document.getElementById("paidStudentWithLunch")) document.getElementById("paidStudentWithLunch").innerText = slCount;
             if (document.getElementById("paidStudent")) document.getElementById("paidStudent").innerText = sCount;
             if (document.getElementById("paidBanquetStandalone")) document.getElementById("paidBanquetStandalone").innerText = banStandaloneCount;
+            if (document.getElementById("paidTraders")) document.getElementById("paidTraders").innerText = traderCount;
             if (document.getElementById("paidOtherCount")) document.getElementById("paidOtherCount").innerText = otherCount;
 
             if (document.getElementById("totalBanquet")) document.getElementById("totalBanquet").innerText = banquetTotalCount;
