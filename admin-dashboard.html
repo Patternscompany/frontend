@@ -708,6 +708,7 @@
             showProgressOverlay(label, ids.length);
             let successCount = 0;
             let errorCount = 0;
+            let failedRegIds = [];
 
             for (let i = 0; i < ids.length; i++) {
                 const id = ids[i];
@@ -720,18 +721,26 @@
                         body: JSON.stringify({ id })
                     });
                     const data = await res.json();
-                    if (data.success) successCount++;
-                    else errorCount++;
+                    if (data.success) {
+                        successCount++;
+                    } else {
+                        errorCount++;
+                        // Find reg_id for better error reporting
+                        const item = allData.find(d => d._id === id);
+                        if (item) failedRegIds.push(item.reg_id);
+                    }
                 } catch (err) {
                     console.error(err);
                     errorCount++;
+                    const item = allData.find(d => d._id === id);
+                    if (item) failedRegIds.push(item.reg_id);
                 }
 
                 // Small delay to prevent hammering
                 await new Promise(r => setTimeout(r, 100));
             }
 
-            finishProgress(successCount, errorCount, label);
+            finishProgress(successCount, errorCount, label, failedRegIds);
         }
 
         function showProgressOverlay(label, total) {
@@ -749,9 +758,19 @@
             document.getElementById("bulkProgressBar").style.width = pct + "%";
         }
 
-        function finishProgress(success, error, label) {
+        function finishProgress(success, error, label, failedIds = []) {
             document.getElementById("bulkProgressTitle").innerText = `${label} Complete`;
-            document.getElementById("bulkProgressText").innerHTML = `<span class="text-success">Success: ${success}</span> | <span class="text-danger">Failed: ${error}</span>`;
+
+            let message = `<span class="text-success">Success: ${success}</span> | <span class="text-danger">Failed: ${error}</span>`;
+
+            if (failedIds.length > 0) {
+                message += `<div class="mt-3 text-start small border p-2 rounded bg-dark text-light" style="max-height: 100px; overflow-y: auto;">
+                    <strong>Failed Reg IDs:</strong><br>
+                    <span class="text-danger">${failedIds.join(', ')}</span>
+                </div>`;
+            }
+
+            document.getElementById("bulkProgressText").innerHTML = message;
             document.getElementById("bulkProgressBar").style.width = "100%";
             document.getElementById("closeProgressBtn").classList.remove("d-none");
         }
