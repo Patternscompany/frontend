@@ -456,6 +456,9 @@
             <button type="button" class="btn btn-info fw-bold text-white" onclick="sendBulkCertificate()">
                 <i class="fa-solid fa-certificate"></i> Bulk Cert
             </button>
+            <button type="button" class="btn btn-secondary fw-bold" onclick="saveBulkCertificates()">
+                <i class="fa-solid fa-download"></i> Save Certs Only
+            </button>
             <button type="button" class="btn btn-success fw-bold" onclick="sendBulkWhatsApp()">
                 <i class="fa-brands fa-whatsapp"></i> Bulk WhatsApp
             </button>
@@ -702,6 +705,13 @@
             if (ids.length === 0) return;
             if (!confirm(`Are you sure you want to GENERATE and SEND Certificates to ${ids.length} selected users? This process is resource intensive.`)) return;
             processBulk(ids, "send-certificate", "Certificate Sending");
+        }
+
+        async function saveBulkCertificates() {
+            const ids = Array.from(selectedIds);
+            if (ids.length === 0) return;
+            if (!confirm(`Are you sure you want to GENERATE and SAVE Certificates for ${ids.length} selected users? (No emails/WhatsApp will be sent)`)) return;
+            processBulk(ids, "save-certificate", "Certificate Saving");
         }
 
         async function processBulk(ids, endpoint, label) {
